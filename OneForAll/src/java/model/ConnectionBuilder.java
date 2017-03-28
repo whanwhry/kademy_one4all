@@ -7,6 +7,7 @@ package model;
     
 public class ConnectionBuilder {
     public static Connection getConnection(){
+        
         Connection con=null;
         try{
             Class.forName("org.apache.derby.jdbc.ClientDriver");

@@ -1,14 +1,51 @@
 
 package model;
 
+import java.sql.*;
+import java.util.*;
+
 public class File {
     private int fileID;
-    private String fileName;
-    private String detail;
+    private String fileTitle;
+    private String description;
     private String time;
     private String capacity;
-    private int stID;
+    private long stID;
     private int downloadRate;
+    private Tag tags;
+        
+   public String insertFile(String fileTitle,String description,String capacity){
+            String status;
+            try{
+                Connection con=ConnectionBuilder.getConnection();
+                  String sql="INSERT INTO File(fileTitle,description,capacity) VALUE(?,?,?)";
+                  PreparedStatement ps=con.prepareStatement(sql);
+                  ps.setString(1,fileTitle);
+                  ps.setString(2, description);
+                  ps.setString(3,capacity);
+                  int result=ps.executeUpdate();
+                  status="complete";
+                  
+            }catch(SQLException e){
+                   status="incomplete";
+                   System.out.println(e);
+            }return status;
+   }
+        public String deleteFile(int fileID){
+            String status;
+            try{
+                Connection con=ConnectionBuilder.getConnection();
+                String sql="DELETE FROM File WHERE FILEID=?";
+                PreparedStatement ps=con.prepareStatement(sql);
+                ps.setInt(1,fileID);
+                int result=ps.executeUpdate();
+                status="Complete";
+            }catch(SQLException e ){
+                    status="incomplete";
+                    System.out.println(e);
+            }return status;
+        }
+    
 
     public int getFileID() {
         return fileID;
@@ -18,20 +55,20 @@ public class File {
         this.fileID = fileID;
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getFileTitle() {
+        return fileTitle;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setFileTitle(String fileTitle) {
+        this.fileTitle = fileTitle;
     }
 
-    public String getDetail() {
-        return detail;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDetail(String detail) {
-        this.detail = detail;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getTime() {
@@ -50,11 +87,11 @@ public class File {
         this.capacity = capacity;
     }
 
-    public int getStID() {
+    public long getStID() {
         return stID;
     }
 
-    public void setStID(int stID) {
+    public void setStID(long stID) {
         this.stID = stID;
     }
 
@@ -65,5 +102,9 @@ public class File {
     public void setDownloadRate(int downloadRate) {
         this.downloadRate = downloadRate;
     }
+    
+
+    
+ 
     
 }
