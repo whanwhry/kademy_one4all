@@ -14,25 +14,43 @@ import java.sql.SQLException;
  *
  * @author KARTOON
  */
-public class Users extends Student{
-    private int ratingID;
-    private String name,surName,password;
+public class Users {
 
+    private long stID;
+    private int ratingID , type;
+    private String name, surName, password;
+    
     public Users() {
     }
 
-    public Users(int ratingID, String name, String password, long stID, int eduYear, String department) {
-        super(stID, eduYear, department);
-        this.ratingID = ratingID;
-        this.name = name;
-        this.password = password;
-    } 
-
-    public Users(String password, long stID) {
-        super(stID);
+    public Users(long stID, String password) {
+        this.stID = stID;
         this.password = password;
     }
+
+    public Users(long stID, int ratingID, String name, String surName, String password) {
+        this.stID = stID;
+        this.ratingID = ratingID;
+        this.name = name;
+        this.surName = surName;
+        this.password = password;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
     
+    public long getStID() {
+        return stID;
+    }
+
+    public void setStID(long stID) {
+        this.stID = stID;
+    }
 
     public int getRatingID() {
         return ratingID;
@@ -65,35 +83,56 @@ public class Users extends Student{
     public void setPassword(String password) {
         this.password = password;
     }
+    public static void main(String[] args) {
+        Users u = checkType("57130500041");
+        System.out.println(u.getType());
+    }
+    public static Users checkType(String username) {
+        Users typeId = null;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "select Type from Users where stID like ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                typeId = new Users();
+                typeId.setType(rs.getInt("Type"));
+            }
+        } catch(SQLException e){
+            System.out.println(e);
+        }
+            return typeId;
+        }
     
 
-    
-    public static boolean logIn(long stID,String password){
-        try{
+    public boolean logIn(long stID, String password) {
+        try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "select stID,password from Student join Users on Student.stID=User.stID where stID=? and password=?";
+            String sql = "select stID,password from Users where stID = ? and password = ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setLong(1, stID);
             ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();//ดึงข้อมูลจากDBมาเก็บในนี้แล้วเอาไปทำอะไรต่อ
-            if(rs.next()){
+            ResultSet rs = ps.executeQuery();//ดึงข้อมูลจากDBมาเก็บในนี้แล้วเอาไปทำอะไรต่อ       
+            if (rs.next()) {
                 Users us = new Users();
-                Student std = new Student();
                 us.setPassword(rs.getString("password"));
-                std.setStID(rs.getLong("stID"));
-                if(stID==std.getStID()){
-                    System.out.println("Login Successful!");
-                }else {
-                    System.out.println("Login Fail!");
-                }
-                    
-             
+                us.setStID(rs.getLong("stID"));
+
+            } else {
+                System.out.println("Login Fail!");
             }
-            
-        }catch(SQLException e){
+        } catch (SQLException e) {
             System.out.println(e);
         }
-        return false;
-        
+        return true;
+
     }
+
+    /*public void main(String[] args) {
+        Users u = new Users();  
+        Users.logIn(57130588041l, "fame");
+        
+
+    }*/
 }

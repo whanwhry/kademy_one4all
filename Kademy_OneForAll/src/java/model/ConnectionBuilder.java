@@ -19,7 +19,7 @@ public class ConnectionBuilder {
         Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver");// 1 Load Driver
-            con = DriverManager.getConnection("jdbc:mysql://localhost:/admin","root", ""); // 2 Connect 
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/admin","root", ""); // 2 Connect 
         } catch (ClassNotFoundException e) {
             System.out.println(e);
         } catch (SQLException e) {
