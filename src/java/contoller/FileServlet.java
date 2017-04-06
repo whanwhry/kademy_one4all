@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package contoller;
 
 import java.io.IOException;
@@ -16,10 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import model.File;
 import model.Tag;
 
-/**
- *
- * @author nunnnunns
- */
 @WebServlet(name = "FileServlet", urlPatterns = {"/FileServlet"})
 public class FileServlet extends HttpServlet {
 
@@ -35,29 +26,27 @@ public class FileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-                String name = request.getParameter("name"); //สตริงเพราะจาวาแสดงค่าออกเป็นสตริง
-        String subname = name.substring(0, 2);
-        if(subname.equals("#")){
-          List<Tag> t = Tag.findByTag(name);
-           if(t == null){
-               request.setAttribute("msg", "Not Found File : "+name);
-           }else{
-               request.setAttribute("t", t);
-           }  
-        }else{
-            
-        
-           List<File> f = File.findByName(name);
-           if(f == null){
-               request.setAttribute("msg", "Not Found File : "+name);
-           }else{
-               request.setAttribute("f", f);
-           }
-               
-        }
-       getServletContext().getRequestDispatcher("/home.jsp").forward(request, response); //เชื่อมหน้าที่แสดงผล
+        String name = request.getParameter("name"); //สตริงเพราะจาวาแสดงค่าออกเป็นสตริง
 
-    
+        List<File> f = File.findByName(name);
+        if (f == null) {
+            request.setAttribute("msg", "Not Found File : " + name);
+        } else {
+            request.setAttribute("f", f);
+        }
+
+        String subname = name.substring(0, 2);
+        if (subname.equals("#")) {
+            List<Tag> t = Tag.findByTag(name);
+            if (t == null) {
+                request.setAttribute("msg", "Not Found File : " + name);
+            } else {
+                request.setAttribute("t", t);
+            }
+        }
+
+        getServletContext().getRequestDispatcher("/home.jsp").forward(request, response); //เชื่อมหน้าที่แสดงผล
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -98,5 +87,4 @@ public class FileServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

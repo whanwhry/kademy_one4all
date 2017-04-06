@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package model;
 
 import java.sql.Connection;
@@ -80,7 +76,9 @@ public class File {
 
     @Override
     public String toString() {
-        return "File{" + "fileName=" + fileName + ", detail=" + detail + ", t=" + t + ", downloadRate=" + downloadRate + ", stID=" + stID + ", capacity=" + capacity + '}';
+        return "File{" + "fileName=" + fileName + ", detail=" + detail +
+               ", t=" + t + ", downloadRate=" + downloadRate +
+                ", stID=" + stID + ", capacity=" + capacity + '}';
     }
     
     public static List<File> findByName(String name) {//สร้างmethodเป็นอาเรย์ลิส
@@ -107,6 +105,7 @@ public class File {
         return cl;
     }
 
+   
     public static void main(String[] args) {
         
         
