@@ -17,9 +17,10 @@ import java.sql.SQLException;
 public class Users {
 
     private long stID;
-    private int ratingID , type;
+    private int ratingID, type;
     private String name, surName, password;
-    
+    private static String msg;
+
     public Users() {
     }
 
@@ -36,6 +37,14 @@ public class Users {
         this.password = password;
     }
 
+    public static String getMsg() {
+        return msg;
+    }
+
+    public static void setMsg(String msg) {
+        Users.msg = msg;
+    }
+
     public int getType() {
         return type;
     }
@@ -43,7 +52,7 @@ public class Users {
     public void setType(int type) {
         this.type = type;
     }
-    
+
     public long getStID() {
         return stID;
     }
@@ -83,10 +92,7 @@ public class Users {
     public void setPassword(String password) {
         this.password = password;
     }
-    public static void main(String[] args) {
-        Users u = checkType("57130500041");
-        System.out.println(u.getType());
-    }
+
     public static Users checkType(String username) {
         Users typeId = null;
         try {
@@ -95,44 +101,49 @@ public class Users {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
+            if (rs.next()) {
                 typeId = new Users();
                 typeId.setType(rs.getInt("Type"));
-            }
-        } catch(SQLException e){
-            System.out.println(e);
-        }
-            return typeId;
-        }
-    
-
-    public boolean logIn(long stID, String password) {
-        try {
-            Connection con = ConnectionBuilder.getConnection();
-            String sql = "select stID,password from Users where stID = ? and password = ?";
-            PreparedStatement ps = con.prepareStatement(sql);
-            ps.setLong(1, stID);
-            ps.setString(2, password);
-            ResultSet rs = ps.executeQuery();//ดึงข้อมูลจากDBมาเก็บในนี้แล้วเอาไปทำอะไรต่อ       
-            if (rs.next()) {
-                Users us = new Users();
-                us.setPassword(rs.getString("password"));
-                us.setStID(rs.getLong("stID"));
-
-            } else {
-                System.out.println("Login Fail!");
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-        return true;
+        return typeId;
+    }
+
+    public boolean logIn(long stID, String password) {
+        boolean result = false;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "select stID,password from Users where stID = ? and password = ?";
+            String sql2 = "select stID from Users ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            PreparedStatement ps2 = con.prepareStatement(sql2);
+            ps.setLong(1, stID);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();//ดึงข้อมูลจากDBมาเก็บในนี้แล้วเอาไปทำอะไรต่อ 
+            ResultSet rs2 = ps2.executeQuery();
+            if (rs.next()) {
+                Users us = new Users();
+                us.setPassword(rs.getString("password"));
+                us.setStID(rs.getLong("stID"));
+                result = true;
+            } else if (rs2.next()) {
+                while (rs2.next()){
+                    if(stID!=rs2.getLong("stID"));
+                    result = false;
+                }
+                
+                msg = "Username not found";
+            } else {
+                result = false;
+                msg = "Incorrect password";
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return result;
 
     }
 
-    /*public void main(String[] args) {
-        Users u = new Users();  
-        Users.logIn(57130588041l, "fame");
-        
-
-    }*/
 }

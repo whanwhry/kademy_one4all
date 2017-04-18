@@ -7,21 +7,18 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Users;
 
 /**
  *
  * @author KARTOON
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,37 +31,11 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String userN = request.getParameter("Username");
-        String passW = request.getParameter("Password");
-        Users us = new Users();
-        try {
-            long usn = Long.parseLong(userN);
-            boolean login = us.logIn(usn, passW);
-            if (login == true) {
-                int type = us.checkType(userN).getType();
-                if (type == 0) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("username", usn);
-                    getServletContext().getRequestDispatcher("/Kademy.jsp").forward(request, response);
-                } else {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("username", usn);
-                    getServletContext().getRequestDispatcher("/Admin.jsp").forward(request, response);
-                }
-            } else {
-                request.setAttribute("msg",Users.getMsg());
-                getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
-            }
-            
-        } catch (NumberFormatException e) {
-            request.setAttribute("msg","Please fill username with number");
-            getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
-        }
-
+        request.getSession().invalidate();
+        response.sendRedirect(request.getContextPath() + "/Login.jsp");
     }
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

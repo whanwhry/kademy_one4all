@@ -133,8 +133,8 @@
                                                 </li>
                                                 <li class="divider"> </li>
                                                 <li>
-                                                    <a href="https://int305-kademy.firebaseapp.com/page_user_login_1.html">
-                                                        <i class="icon-key"></i> Log Out </a>
+                                                <a href="LogoutServlet">
+                                                        <i class="icon-key"></i> Log out </a>
                                                 </li>
                                             </ul>
                                         </li>

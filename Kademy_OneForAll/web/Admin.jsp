@@ -89,8 +89,26 @@
                                         <!-- BEGIN USER LOGIN DROPDOWN -->
                                         <li class="dropdown dropdown-user dropdown-dark">
                                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                                <span class="username"></span>
+                                            </a>
+                                        </li>
+                                        <!-- END USER LOGIN DROPDOWN -->
+                                          <!-- BEGIN USER LOGIN DROPDOWN -->
+                                        <li class="dropdown dropdown-user dropdown-dark">
+                                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                                 <span class="username"><%out.print(session.getAttribute("username"));%></span>
                                             </a>
+                                            <ul class="dropdown-menu dropdown-menu-default">
+                                                <li>
+                                                    <a href="https://int305-kademy.firebaseapp.com/page_user_profile_1.html">
+                                                        <i class="icon-user"></i> My Profile </a>
+                                                </li>
+                                                <li class="divider"> </li>
+                                                <li>
+                                                <a href="LogoutServlet">
+                                                        <i class="icon-key"></i> Log out </a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <!-- END USER LOGIN DROPDOWN -->
                                         <!-- BEGIN QUICK SIDEBAR TOGGLER -->
