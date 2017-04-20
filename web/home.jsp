@@ -213,18 +213,10 @@
                                                                     <div class="input-icon right">
                                                                         <i class="icon-magnifier"></i>
                                                                        
-                                                                        <form action="/One4all/FileServlet" method="post">
-                                                                            <input type="text" name="name">
+                                                                        <form action="FileServlet" method="post">
+                                                                            <input type="text" name="filename">
                                                                             <input type="submit" value="Search">
                                                                         </form>
-
-                                                                        <p>${msg}</p> 
-                                                                        <c:forEach items="${f}" var="c" varStatus="vs">
-                                                                            <h3>${f.fileName}</h3>
-                                                                        </c:forEach>
-                                                                        <c:forEach items="${t}" var="c" varStatus="vs">
-                                                                            <h3>${t.tagName}</h3>
-                                                                        </c:forEach>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -242,118 +234,26 @@
                                                     </ul>
                                                     <div class="todo-container">
                                                         <ul class="todo-projects-container">
-                                                            <li class="todo-projects-item">
-                                                                <h3>สรุปมิดเทอม ฟิสิก</h3>
-                                                                <p>สรุปฟิสิกส์มิดเทอมโดยพี่แมว</p><p>
-                                                                    <span class="label label-sm label-info labelTag">Midterm</span>
-                                                                    <span class="label label-sm label-info labelTag">Physic</span>
-                                                                    <span class="label label-sm label-info labelTag">PHY101</span>
-                                                                </p>
-                                                                <div class="todo-project-item-foot">
-                                                                    <p class="todo-red todo-inline">Anna Healer</p>
-                                                                    <p class="todo-inline todo-float-r">30 NOV 2016 - 15 downloads
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <div class="todo-projects-divider"></div>
-                                                            <li class="todo-projects-item">
-                                                                <h3>สรุปมิดเทอม ฟิสิก</h3>
-                                                                <p>สรุปฟิสิกส์มิดเทอมโดยพี่แมว</p><p>
-                                                                    <span class="label label-sm label-info labelTag">Midterm</span>
-                                                                    <span class="label label-sm label-info labelTag">Physic</span>
-                                                                    <span class="label label-sm label-info labelTag">PHY101</span>
-                                                                </p>
-                                                                <div class="todo-project-item-foot">
-                                                                    <p class="todo-red todo-inline">Anna Healer</p>
-                                                                    <p class="todo-inline todo-float-r">30 NOV 2016 - 15 downloads
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <div class="todo-projects-divider"></div>
-                                                            <li class="todo-projects-item">
-                                                                <h3>สรุปมิดเทอม ฟิสิก</h3>
-                                                                <p>สรุปฟิสิกส์มิดเทอมโดยพี่แมว</p><p>
-                                                                    <span class="label label-sm label-info labelTag">Midterm</span>
-                                                                    <span class="label label-sm label-info labelTag">Physic</span>
-                                                                    <span class="label label-sm label-info labelTag">PHY101</span>
-                                                                </p>
-                                                                <div class="todo-project-item-foot">
-                                                                    <p class="todo-red todo-inline">Anna Healer</p>
-                                                                    <p class="todo-inline todo-float-r">30 NOV 2016 - 15 downloads
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <div class="todo-projects-divider"></div>
-                                                            <li class="todo-projects-item">
-                                                                <h3>สรุปมิดเทอม ฟิสิก</h3>
-                                                                <p>สรุปฟิสิกส์มิดเทอมโดยพี่แมว</p><p>
-                                                                    <span class="label label-sm label-info labelTag">Midterm</span>
-                                                                    <span class="label label-sm label-info labelTag">Physic</span>
-                                                                    <span class="label label-sm label-info labelTag">PHY101</span>
-                                                                </p>
-                                                                <div class="todo-project-item-foot">
-                                                                    <p class="todo-red todo-inline">Anna Healer</p>
-                                                                    <p class="todo-inline todo-float-r">30 NOV 2016 - 15 downloads
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <div class="todo-projects-divider"></div>
-                                                            <li class="todo-projects-item">
-                                                                <h3>สรุปมิดเทอม ฟิสิก</h3>
-                                                                <p>สรุปฟิสิกส์มิดเทอมโดยพี่แมว</p><p>
-                                                                    <span class="label label-sm label-info labelTag">Midterm</span>
-                                                                    <span class="label label-sm label-info labelTag">Physic</span>
-                                                                    <span class="label label-sm label-info labelTag">PHY101</span>
-                                                                </p>
-                                                                <div class="todo-project-item-foot">
-                                                                    <p class="todo-red todo-inline">Anna Healer</p>
-                                                                    <p class="todo-inline todo-float-r">30 NOV 2016 - 15 downloads
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <div class="todo-projects-divider"></div>
-                                                            <li class="todo-projects-item">
-                                                                <h3>สรุปมิดเทอม ฟิสิก</h3>
-                                                                <p>สรุปฟิสิกส์มิดเทอมโดยพี่แมว</p><p>
-                                                                    <span class="label label-sm label-info labelTag">Midterm</span>
-                                                                    <span class="label label-sm label-info labelTag">Physic</span>
-                                                                    <span class="label label-sm label-info labelTag">PHY101</span>
-                                                                </p>
-                                                                <div class="todo-project-item-foot">
-                                                                    <p class="todo-red todo-inline">Anna Healer</p>
-                                                                    <p class="todo-inline todo-float-r">30 NOV 2016 - 15 downloads
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <div class="todo-projects-divider"></div>
-                                                            <li class="todo-projects-item">
-                                                                <h3>สรุปมิดเทอม ฟิสิก</h3>
-                                                                <p>สรุปฟิสิกส์มิดเทอมโดยพี่แมว</p><p>
-                                                                    <span class="label label-sm label-info labelTag">Midterm</span>
-                                                                    <span class="label label-sm label-info labelTag">Physic</span>
-                                                                    <span class="label label-sm label-info labelTag">PHY101</span>
-                                                                </p>
-                                                                <div class="todo-project-item-foot">
-                                                                    <p class="todo-red todo-inline">Anna Healer</p>
-                                                                    <p class="todo-inline todo-float-r">30 NOV 2016 - 15 downloads
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <div class="todo-projects-divider"></div>
-                                                            <li class="todo-projects-item">
-                                                                <h3>สรุปมิดเทอม ฟิสิก</h3>
-                                                                <p>สรุปฟิสิกส์มิดเทอมโดยพี่แมว</p><p>
-                                                                    <span class="label label-sm label-info labelTag">Midterm</span>
-                                                                    <span class="label label-sm label-info labelTag">Physic</span>
-                                                                    <span class="label label-sm label-info labelTag">PHY101</span>
-                                                                </p>
-                                                                <div class="todo-project-item-foot">
-                                                                    <p class="todo-red todo-inline">Anna Healer</p>
-                                                                    <p class="todo-inline todo-float-r">30 NOV 2016 - 15 downloads
-                                                                    </p>
-                                                                </div>
-                                                            </li>
-                                                            <div class="todo-projects-divider"></div>
+                                                            <p>${msg}</p>
+                                                            <c:forEach items="${f}" var="c" varStatus="vs">
+                                                             <li class="todo-projects-item">
+                                                                 <h3>${c.fileName}</h3>
+                                                                 <p>${c.detail}</p>
+                                                                 <p>
+                                                                     <c:forEach items="${t}" var="c2" varStatus="vs">
+                                                                         <span class="label label-sm label-info labelTag">${c2.tagName}</span>     
+                                                                     </c:forEach>
+                                                                 </p>
+                                                                 <div class="todo-project-item-foot">
+                                                                     <p class="todo-red todo-inline"><h3>${c.stID}</h3></p>
+                                                                     <p class="todo-inline todo-float-r">30 NOV 2016 - 15 downloads
+                                                                     </p>
+                                                                 </div>
+                                                             </li>
+                                                             <div class="todo-projects-divider"></div>
+                                                            </c:forEach>
+                                                             
+                                                           
 
                                                         </ul>																																																	<div class="todo-projects-divider"></div>
                                                     </div>

@@ -2,6 +2,7 @@ package contoller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,16 +27,19 @@ public class FileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String name = request.getParameter("name"); //สตริงเพราะจาวาแสดงค่าออกเป็นสตริง
-
+        
+        String name = request.getParameter("filename"); //สตริงเพราะจาวาแสดงค่าออกเป็นสตริง
+        
         List<File> f = File.findByName(name);
+   
         if (f == null) {
             request.setAttribute("msg", "Not Found File : " + name);
         } else {
             request.setAttribute("f", f);
         }
+        request.setAttribute("f", f);
 
-        String subname = name.substring(0, 2);
+        String subname = name.substring(0, 1);
         if (subname.equals("#")) {
             List<Tag> t = Tag.findByTag(name);
             if (t == null) {

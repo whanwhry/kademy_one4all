@@ -1,4 +1,3 @@
-
 package model;
 
 import java.sql.Connection;
@@ -14,9 +13,11 @@ import java.util.List;
  * @author nunnnunns
  */
 public class File {
-    private String fileName,detail;
+
+    private String fileName, detail;
     private Time t;
-    private int downloadRate,stID,capacity;
+    private int downloadRate, capacity;
+    private long stID;
 
     public File() {
     }
@@ -24,8 +25,7 @@ public class File {
     public File(String fileName) {
         this.fileName = fileName;
     }
-    
-     
+
     public String getFileName() {
         return fileName;
     }
@@ -58,11 +58,11 @@ public class File {
         this.downloadRate = downloadRate;
     }
 
-    public int getStID() {
+    public long getStID() {
         return stID;
     }
 
-    public void setStID(int stID) {
+    public void setStID(long stID) {
         this.stID = stID;
     }
 
@@ -76,40 +76,44 @@ public class File {
 
     @Override
     public String toString() {
-        return "File{" + "fileName=" + fileName + ", detail=" + detail +
-               ", t=" + t + ", downloadRate=" + downloadRate +
-                ", stID=" + stID + ", capacity=" + capacity + '}';
+        return "File{" + "fileName=" + fileName + ", detail=" + detail
+                + ", t=" + t + ", downloadRate=" + downloadRate
+                + ", stID=" + stID + ", capacity=" + capacity + '}';
     }
-    
+
     public static List<File> findByName(String name) {//สร้างmethodเป็นอาเรย์ลิส
         List<File> cl = null;//สร้างอาเรย์ลิสเพื่อที่เก็บชื่อเป็นลิส
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "select * from file where name like ?"; //ใช้ภาษาsqlหาชื่อ
+            String sql = "select * from file where fileName like ?"; //ใช้ภาษาsqlหาชื่อ
             PreparedStatement st = con.prepareStatement(sql);// เตรียมคำสั่งนี้ให้สมบูรณ์(ข้างบน)
             st.setString(1, "%" + name + "%");//ใช้"%"เพื่อที่หลังจากตัวอักษรที่หาจะเป็นอะไรก็ได้
             ResultSet rs = st.executeQuery();
             while (rs.next()) {//สร้างลูปหาชื่อ
                 File cus = new File();
-                
-                cus.setFileName(rs.getString("name"));
+                cus.setFileName(rs.getString("fileName"));
+                cus.setDetail(rs.getString("detail"));
+                cus.setStID(rs.getLong("stID"));
                 if (cl == null) {//ถ้าไม่เจอให่สร้างอาเรย์
                     cl = new ArrayList<>();
-
                 }
                 cl.add(cus);//เพิ่มชื่อที่หาเจอไปในลิสเรื่อยๆ
+
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
+
         return cl;
     }
 
-   
     public static void main(String[] args) {
-        
-        
-        List<File> cc = findByName("J");//ทดลองหาชื่อจากตัวอักษรตัว J
-        System.out.println(cc);
+
+        File f = new File();
+        List<File> cc = findByName("int105");//ทดลองหาชื่อ
+        for (int i = 0; i <= cc.size() - 1; i++) {
+            System.out.println(cc.get(i).getFileName());
+        }
+
     }
 }
