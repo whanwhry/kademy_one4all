@@ -5,6 +5,7 @@ import java.sql.*;
 import java.util.*;
 
 public class Tag {
+    
     private int tagID;
     private String tagname;
     
@@ -30,7 +31,7 @@ public class Tag {
             System.out.println(e);
         }return listTags;
     }
-        public String insertTag(String tagname){
+        public String insertTag(int tagID,String tagname){
             String status;
             try{
                  Connection con=ConnectionBuilder.getConnection();
@@ -62,6 +63,8 @@ public class Tag {
     public void setTagname(String tagname) {
         this.tagname = tagname;
     }
+
+   
 
     
 }

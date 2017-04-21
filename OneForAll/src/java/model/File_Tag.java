@@ -5,7 +5,7 @@ package model;
 public class File_Tag {
     private int fileID;
     private int tagID;
-
+    //file id มี tag id อะไรบ้างเรียกออกมาให้มด
     public int getFileID() {
         return fileID;
     }
