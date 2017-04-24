@@ -216,38 +216,47 @@
                                                 </div>
                                                 <div class="portlet-body form">
                                                     <div class="container-fluid">
-                                                    
-                                                    <form class="form-horizontal" role="form" action="Upload" method="post" enctype="multipart/form-data">
-                                                        <div class="form-body">
-                                                            <div class="form-group">
-                                                                <label class="col-md-3 control-label">Title</label>
-                                                                <div class="col-md-7">
-                                                                    <input type="text" class="form-control" placeholder="Qustion here" maxlength="50" required>
+
+                                                        <form class="form-horizontal" role="form" action="Upload" method="post" enctype="multipart/form-data">
+                                                            <div class="form-body">
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 control-label">Title</label>
+                                                                    <div class="col-md-7">
+                                                                        <input type="text" class="form-control" placeholder="Qustion here" maxlength="50" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 control-label">Tag </label>
+                                                                    <div class="col-md-7">
+                                                                        <input type="text" class="form-control" value="" placeholder="At least one tag such as mth111 midterm" data-role="tagsinput" style="display: none;" maxlength="50" required>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label class="col-md-3 control-label">Description</label>
+                                                                    <div class="col-md-7">
+                                                                        <textarea class="form-control" placeholder="description here (Maximum 50 character)" maxlength="50" name="detail"></textarea>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label class="col-md-3 control-label">Tag </label>
-                                                                <div class="col-md-7">
-                                                                    <input type="text" class="form-control" value="" placeholder="At least one tag such as mth111 midterm" data-role="tagsinput" style="display: none;" maxlength="50" required>
+
+
+                                                            <div class="form-actions">
+                                                                <div class="col-md-offset-3 col-md-9">
+                                                                    
+                                                                    <input type="file" name="file" id="myFile" required />
+                                                                    <script>
+                                                                    //binds to onchange event of your input field
+                                                                    $('#myFile').bind('change', function() {
+
+                                                                    //this.files[0].size gets the size of your file.
+                                                                    alert(this.files[0].size);
+
+                                                                    });
+                                                                    </script>
+                                                                    <input type="submit" class="btn dark" value="share" onClick="" name="file">
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                <label class="col-md-3 control-label">Description</label>
-                                                                <div class="col-md-7">
-                                                                    <textarea class="form-control" placeholder="description here (Maximum 50 character)" maxlength="50"></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                    
-                                                        <div class="form-actions">
-                                                            <div class="col-md-offset-3 col-md-9">
-                                                                
-                                                                <input type="file" name="file" />
-                                                                <input type="submit" class="btn dark" value="share" onClick="" name="file">
-                                                            </div>
-                                                        </div>
-                                                    </form>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -304,8 +313,8 @@
 
         <!-- end footer -->
         <input type="file" multiple="multiple" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
-  
-    
+
+
     </body>
 </html>
 

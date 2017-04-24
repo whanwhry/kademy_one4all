@@ -6,7 +6,7 @@ import java.text.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class File {
+public class File extends Tagss {
 
     private int fileID;
     private String fileName;
@@ -17,19 +17,40 @@ public class File {
     private long userId;
     private int downloadCount;
     private static int numCount=0;
-    private Tag tags;
-
-    public String insertFile(String fileName,String detail, String capacity) {
+    private Tagss tags;
+    
+    
+    
+    public static String insertFile(String fileName,String detail, String capacity,String path) {
         String status;
+        int store=0;
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "INSERT INTO File(fileName,detail,capacity) VALUE(?,?,?)";
+            String sqlSelectFileID="SELECT * from File";
+            PreparedStatement ps1 = con.prepareStatement(sqlSelectFileID);
+            ResultSet select=ps1.executeQuery();
+            
+            while(select.next()){
+                 store=select.getInt("fileID");
+            }
+            
+            String sql = "INSERT INTO File(fileName,detail,capacity,fileID,path) VALUE(?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, fileName);
             ps.setString(2, detail);
             ps.setString(3, capacity);
+            ps.setInt(4,++store);
+            ps.setString(5, path);
             int result = ps.executeUpdate();
+            
+            String sql2="INSERT INTO file_Tag(fileID,tagID) VALUE(?,?)"; //ให้ส่งfileid tagid ขึ้นตารางใน db 
+            PreparedStatement ps2 = con.prepareStatement(sql2);
+            ps2.setInt(1, store);
+            ps2.setInt(2, tagID);
+           
+            int result2 =ps2.executeUpdate();
             status = "complete";
+            
         } catch (SQLException e) {
             status = "incomplete";
             System.out.println(e);
@@ -106,11 +127,11 @@ public class File {
         File.numCount = numCount;
     }
 
-    public Tag getTags() {
+    public Tagss getTags() {
         return tags;
     }
 
-    public void setTags(Tag tags) {
+    public void setTags(Tagss tags) {
         this.tags = tags;
     }
     
@@ -160,6 +181,8 @@ public class File {
     
     public void upload(File f){}
    
-    
+    public static void main(String[]args){
+        
+    }
     
 }

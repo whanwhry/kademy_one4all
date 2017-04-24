@@ -10,9 +10,9 @@ public class ConnectionBuilder {
         
         Connection con=null;
         try{
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            Class.forName("com.mysql.jdbc.Driver");
             
-        con=DriverManager.getConnection("jdbc:derby://sit-edu5.sit.kmutt.ac.th:8443/Kademy_db","i206259005","Sa_RagazefA4");
+        con=DriverManager.getConnection("jdbc:mysql://localhost:3306/kademy","root","");
         
         }catch(ClassNotFoundException e){
             System.out.println(e);

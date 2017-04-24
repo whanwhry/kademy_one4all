@@ -1,18 +1,22 @@
 
 package model;
-
+    import java.sql.*;
+    import java.util.*;
 
 public class File_Tag {
-    private int fileID;
+   
     private int tagID;
     //file id มี tag id อะไรบ้างเรียกออกมาให้มด
-    public int getFileID() {
-        return fileID;
+    public String gettagID(int tagID){
+        String status ;
+        Connection con = ConnectionBuilder.getConnection();
+        
+        
+        return null;
+        
     }
-
-    public void setFileID(int fileID) {
-        this.fileID = fileID;
-    }
+            
+   
 
     public int getTagID() {
         return tagID;

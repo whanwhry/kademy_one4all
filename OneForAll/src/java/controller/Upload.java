@@ -1,4 +1,3 @@
-
 package controller;
 
 import java.io.File;
@@ -17,32 +16,40 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.lang.NullPointerException;
+import model.Files;
 
-
-@MultipartConfig
+@MultipartConfig // <---- ใส่เพื่อบอก ว่าจะใช้ ความสามารถของ servlet 3.0 ในการดึงข้อมูลจากไฟล์ที่อัพโหลด
 public class Upload extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        Part filePart = request.getPart("file");
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        InputStream fileContent=filePart.getInputStream();
+        Part filePart = request.getPart("file"); // เอาข้อมูลมาจาก form ที่มี input ชื่อ file โดยเป็น input type = file
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // เอาชื่อไฟล์ออกมา จะมีนามสกุลติดมาด้วย ถ้าจะเอา แค่นามสกุลแล้วใช้ชื่อไฟล์ที่เจน เอง ก็ให้ใช้ substring
+        //String fileSize =Paths.get(filePart.getSubmittedFileName();
+        InputStream fileContent = filePart.getInputStream(); // เอาข้อมูลตัวไฟล์(ที่เป้น byte)ออกมาเก็บใน inputstream เพื่อรอการเขียนไฟล์
         OutputStream outputStream = null;
-        
-        try{ 
-            outputStream
-                    =new FileOutputStream(new File("C:\\Users\\User\\Documents\\kademy_one4all\\OneForAll"+fileName));
-            int read=0;
-            byte[] bytes=new byte[1024];
-        
-            while ((read = fileContent.read(bytes)) != -1){
-                outputStream.write(bytes, 0, read);
-        }
-        
-        }catch(FileNotFoundException e){
-            System.out.println(e);
-        } finally { // ปิด outputStream เมื่อ เขียนเสร็จเพื่อประหยัด resource
+        String tranPath;
+        /* String title = request.getParameter("title");
+        String tag = request.getParameter("tag");
+        String desc = request.getParameter("desc");*/
+        tranPath = "C:\\Users\\User\\Documents\\kademy_one4all\\OneForAll\\";
+
+        try {
+
+            outputStream // สร้าง outputStream ในการเขียนไฟล์ 
+                    = new FileOutputStream(new File(tranPath+fileName));
+
+            int read = 0;
+            byte[] bytes = new byte[1024]; // สร้าง byte ในการทีจะบอกว่าจะให้เขียนไฟล์ ทีละ กี่ byte
+
+            while ((read = fileContent.read(bytes)) != -1) {  // เป็นการสั่งให้เขียนไฟล์ ทีละ 1024 byte ถ้าเขียนหมดแล้ว จะ return -1
+                outputStream.write(bytes, 0, read);// เขียนไฟล์ ตามจำนวน byte ที่ read มาได้ โดยให้เริ่มตั้งแต่ byte ที่ 0
+            }
+
+        } catch (FileNotFoundException e) {
+            request.setAttribute("msg", "Not Found file");
+        } finally {  // ปิด outputStream เมื่อ เขียนเสร็จเพื่อประหยัด resource
             if (outputStream != null) {
                 try {
                     outputStream.close();
@@ -51,6 +58,7 @@ public class Upload extends HttpServlet {
                 }
             }
         }
+        Files.insertFile(fileName,"detail",2.5,"path");
         getServletContext().getRequestDispatcher("/success.jsp").forward(request, response);
         
     }
