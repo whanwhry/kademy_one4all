@@ -1,5 +1,8 @@
+
 <!DOCTYPE html>
 <!-- saved from url=(0058)https://int305-kademy.firebaseapp.com/admin-one-4-all.html -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>KADEMY | STRONGEST LEARNING PLATFORM FOR KMUTT STUDENT</title>
@@ -93,7 +96,7 @@
                                             </a>
                                         </li>
                                         <!-- END USER LOGIN DROPDOWN -->
-                                          <!-- BEGIN USER LOGIN DROPDOWN -->
+                                        <!-- BEGIN USER LOGIN DROPDOWN -->
                                         <li class="dropdown dropdown-user dropdown-dark">
                                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                                 <span class="username"><%out.print(session.getAttribute("username"));%></span>
@@ -105,7 +108,7 @@
                                                 </li>
                                                 <li class="divider"> </li>
                                                 <li>
-                                                <a href="LogoutServlet">
+                                                    <a href="LogoutServlet">
                                                         <i class="icon-key"></i> Log out </a>
                                                 </li>
                                             </ul>
@@ -184,18 +187,21 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                <c:forEach items= "${report}" var="rp" varStatus="vs">
                                                                 <tr>
-                                                                    <td>
-                                                                        <a href="javascript:;">??????????? ?????</a>
-                                                                    </td>
-                                                                    <td>12</td>
-                                                                    <td>
-                                                                        <a href="javascript:;" class="btn btn-sm btn-default">
-                                                                            <i class="fa fa-search"></i> Download </a>
-                                                                        <a href="javascript:;" class="btn btn-sm red-mint">
-                                                                            <i class="fa fa-ban"></i>Delete Sheet</a>
-                                                                    </td>
-                                                                </tr>
+                                                                        <td>
+                                                                            <a href="javascript:;">${rp.fileID}</a>
+                                                                        </td>
+                                                                        <td>12</td>
+                                                                        <td>
+                                                                            <a href="javascript:;" class="btn btn-sm btn-default">
+                                                                                <i class="fa fa-search"></i> Download </a>
+                                                                            <a href="javascript:;" class="btn btn-sm red-mint">
+                                                                                <i class="fa fa-ban"></i>Delete Sheet</a>
+                                                                                <br>
+                                                                        </td>
+                                                            </tr>
+                                                                </c:forEach>
                                                             </tbody>
                                                         </table>
                                                     </div>

@@ -116,28 +116,17 @@ public class Users {
         try {
             Connection con = ConnectionBuilder.getConnection();
             String sql = "select stID,password from Users where stID = ? and password = ?";
-            String sql2 = "select stID from Users ";
             PreparedStatement ps = con.prepareStatement(sql);
-            PreparedStatement ps2 = con.prepareStatement(sql2);
             ps.setLong(1, stID);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();//ดึงข้อมูลจากDBมาเก็บในนี้แล้วเอาไปทำอะไรต่อ 
-            ResultSet rs2 = ps2.executeQuery();
             if (rs.next()) {
                 Users us = new Users();
                 us.setPassword(rs.getString("password"));
                 us.setStID(rs.getLong("stID"));
                 result = true;
-            } else if (rs2.next()) {
-                while (rs2.next()){
-                    if(stID!=rs2.getLong("stID"));
-                    result = false;
-                }
-                
-                msg = "Username not found";
             } else {
-                result = false;
-                msg = "Incorrect password";
+                msg = "Username or Password is incorrect.";
             }
         } catch (SQLException e) {
             System.out.println(e);

@@ -31,8 +31,8 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().invalidate();
-        response.sendRedirect(request.getContextPath() + "/Login.jsp");
+        request.getSession().invalidate();//คำสั่งที่ใช้ในการเคลียร์ session
+        response.sendRedirect(request.getContextPath() + "/Login.jsp");//เมื่อทำการล็อคเอ้าออกให้ออกจากหน้าเว็บที่เข้าอยู่กลับไปที่หน้าล็อคอิน
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
