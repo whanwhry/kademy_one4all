@@ -1,11 +1,14 @@
 package model;
 
+import java.io.File;
 import java.sql.*;
 import java.util.Date;
 import java.text.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import static model.Tagss.tagID;
+
+
 
 public class Files extends Tagss {
 
@@ -51,7 +54,7 @@ public class Files extends Tagss {
            
             int result2 =ps2.executeUpdate();
             
-            Tagss.insertTag(tagID,"tagName");
+            Tagss.insertTag("tagName");
             status = "complete";
             
         } catch (SQLException e) {
@@ -183,9 +186,5 @@ public class Files extends Tagss {
   
     
     public void upload(File f){}
-   
-    public static void main(String[]args){
-        
-    }
     
 }

@@ -4,7 +4,8 @@
     Author     : User
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -222,19 +223,20 @@
                                                                 <div class="form-group">
                                                                     <label class="col-md-3 control-label">Title</label>
                                                                     <div class="col-md-7">
-                                                                        <input type="text" class="form-control" placeholder="Qustion here" maxlength="50" required>
+                                                                        <input type="text" name="title" class="form-control" placeholder="Qustion here" maxlength="50" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="col-md-3 control-label">Tag </label>
                                                                     <div class="col-md-7">
-                                                                        <input type="text" class="form-control" value="" placeholder="At least one tag such as mth111 midterm" data-role="tagsinput" style="display: none;" maxlength="50" required>
+                                                                        <input type="text" name="tag" class="form-control" value="" placeholder="At least one tag such as mth111 midterm" data-role="tagsinput" 
+                                                                               style="display: none;" maxlength="50" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <label class="col-md-3 control-label">Description</label>
                                                                     <div class="col-md-7">
-                                                                        <textarea class="form-control" placeholder="description here (Maximum 50 character)" maxlength="50" name="detail"></textarea>
+                                                                        <textarea class="form-control" name="detail" placeholder="description here (Maximum 50 character)" maxlength="50" name="detail"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -313,6 +315,7 @@
 
         <!-- end footer -->
         <input type="file" multiple="multiple" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
+        
 
 
     </body>

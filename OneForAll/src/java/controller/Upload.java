@@ -24,9 +24,14 @@ public class Upload extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         Part filePart = request.getPart("file"); // เอาข้อมูลมาจาก form ที่มี input ชื่อ file โดยเป็น input type = file
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // เอาชื่อไฟล์ออกมา จะมีนามสกุลติดมาด้วย ถ้าจะเอา แค่นามสกุลแล้วใช้ชื่อไฟล์ที่เจน เอง ก็ให้ใช้ substring
+        String detail = request.getParameter("detail"); // เรียกข้อมูลจากช่อง description มาผ่านตัวแปรชื่อ detail
+        String title = request.getParameter("title");
+       // String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // เอาชื่อไฟล์ออกมา จะมีนามสกุลติดมาด้วย ถ้าจะเอา แค่นามสกุลแล้วใช้ชื่อไฟล์ที่เจน เอง ก็ให้ใช้ substring
         //String fileSize =Paths.get(filePart.getSubmittedFileName();
+        String insertTag =request.getParameter("tag");
         InputStream fileContent = filePart.getInputStream(); // เอาข้อมูลตัวไฟล์(ที่เป้น byte)ออกมาเก็บใน inputstream เพื่อรอการเขียนไฟล์
         OutputStream outputStream = null;
         String tranPath;
@@ -38,7 +43,7 @@ public class Upload extends HttpServlet {
         try {
 
             outputStream // สร้าง outputStream ในการเขียนไฟล์ 
-                    = new FileOutputStream(new File(tranPath+fileName));
+                    = new FileOutputStream(new File(tranPath+title));
 
             int read = 0;
             byte[] bytes = new byte[1024]; // สร้าง byte ในการทีจะบอกว่าจะให้เขียนไฟล์ ทีละ กี่ byte
@@ -58,7 +63,10 @@ public class Upload extends HttpServlet {
                 }
             }
         }
-        Files.insertFile(fileName,"detail",2.5,"path");
+     
+        System.out.println(title + "FOUNDDD");
+        Files.insertFile(title,detail,2.5,"path");
+        Files.insertTag(insertTag);
         getServletContext().getRequestDispatcher("/success.jsp").forward(request, response);
         
     }

@@ -30,7 +30,7 @@ public final class upload_jsp extends org.apache.jasper.runtime.HttpJspBase
     PageContext _jspx_page_context = null;
 
     try {
-      response.setContentType("text/html;charset=UTF-8");
+      response.setContentType("text/html; charset=UTF-8");
       pageContext = _jspxFactory.getPageContext(this, request, response,
       			null, true, 8192, true);
       _jspx_page_context = pageContext;
@@ -261,19 +261,20 @@ public final class upload_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                                                <div class=\"form-group\">\n");
       out.write("                                                                    <label class=\"col-md-3 control-label\">Title</label>\n");
       out.write("                                                                    <div class=\"col-md-7\">\n");
-      out.write("                                                                        <input type=\"text\" class=\"form-control\" placeholder=\"Qustion here\" maxlength=\"50\" required>\n");
+      out.write("                                                                        <input type=\"text\" name=\"title\" class=\"form-control\" placeholder=\"Qustion here\" maxlength=\"50\" required>\n");
       out.write("                                                                    </div>\n");
       out.write("                                                                </div>\n");
       out.write("                                                                <div class=\"form-group\">\n");
       out.write("                                                                    <label class=\"col-md-3 control-label\">Tag </label>\n");
       out.write("                                                                    <div class=\"col-md-7\">\n");
-      out.write("                                                                        <input type=\"text\" class=\"form-control\" value=\"\" placeholder=\"At least one tag such as mth111 midterm\" data-role=\"tagsinput\" style=\"display: none;\" maxlength=\"50\" required>\n");
+      out.write("                                                                        <input type=\"text\" name=\"tag\" class=\"form-control\" value=\"\" placeholder=\"At least one tag such as mth111 midterm\" data-role=\"tagsinput\" \n");
+      out.write("                                                                               style=\"display: none;\" maxlength=\"50\" required>\n");
       out.write("                                                                    </div>\n");
       out.write("                                                                </div>\n");
       out.write("                                                                <div class=\"form-group\">\n");
       out.write("                                                                    <label class=\"col-md-3 control-label\">Description</label>\n");
       out.write("                                                                    <div class=\"col-md-7\">\n");
-      out.write("                                                                        <textarea class=\"form-control\" placeholder=\"description here (Maximum 50 character)\" maxlength=\"50\" name=\"detail\"></textarea>\n");
+      out.write("                                                                        <textarea class=\"form-control\" name=\"detail\" placeholder=\"description here (Maximum 50 character)\" maxlength=\"50\" name=\"detail\"></textarea>\n");
       out.write("                                                                    </div>\n");
       out.write("                                                                </div>\n");
       out.write("                                                            </div>\n");
@@ -352,6 +353,7 @@ public final class upload_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("        <!-- end footer -->\n");
       out.write("        <input type=\"file\" multiple=\"multiple\" class=\"dz-hidden-input\" style=\"visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;\">\n");
+      out.write("        \n");
       out.write("\n");
       out.write("\n");
       out.write("    </body>\n");
