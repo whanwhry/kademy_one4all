@@ -6,13 +6,13 @@ import java.util.Date;
 import java.text.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import static model.Tagss.tagID;
-
-
 
 public class Files extends Tagss {
 
-    private int fileID;
+    private static int fileID;
     private String fileName;
     private String detail;
     private String path;
@@ -20,43 +20,55 @@ public class Files extends Tagss {
     private double capacity;
     private long userId;
     private int downloadCount;
-    private static int numCount=0;
+    private static int numCount = 0;
     private Tagss tags;
-    
-    
-    
-    public static String insertFile(String fileName,String detail, double capacity,String path) {
+
+    // method insertFile ขึ้น database ให้ส่ง filename detail(หัวข้อไฟล์) capacity path และ tagname
+    public static String insertFile(String fileName, String detail, double capacity, String path, String tagName) {
         String status;
-        int store=0;
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sqlSelectFileID="SELECT * from File";
-            PreparedStatement ps1 = con.prepareStatement(sqlSelectFileID);
-            ResultSet select=ps1.executeQuery();
-            
-            while(select.next()){
-                 store=select.getInt("fileID");
-            }
-            
-            String sql = "INSERT INTO File(fileName,detail,capacity,fileID,path) VALUE(?,?,?,?,?)";
+            String sql = "INSERT INTO File(fileName,detail,capacity,path) VALUE(?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, fileName);
             ps.setString(2, detail);
             ps.setDouble(3, capacity);
-            ps.setInt(4,++store);
-            ps.setString(5, path);
+            ps.setString(4, path);
             int result = ps.executeUpdate();
+
+            String sqlSelectFileID = "SELECT * from File where fileName like ?"; //ให้หา filename ในfile เพื่อหา fileid
+            PreparedStatement ps1 = con.prepareStatement(sqlSelectFileID);
+            ps1.setString(1, "%" + fileName + "%");
+            ResultSet select = ps1.executeQuery();
+
+            int fileid = 0;
+            while (select.next()) {
+                fileid = select.getInt("fileID"); //นำ filename ที่ select ออกมา วนหา fileid
+            }
+
+            String selectTag = "SELECT * from Tag where tagName like ?"; //ให้นำ tagname ใน file เพื่อนำไปหา tagid
+            PreparedStatement ps2 = con.prepareStatement(selectTag);
+            ps2.setString(1, subTag);
+            ResultSet selectTags = ps2.executeQuery();
+            ArrayList<Integer> list = new ArrayList();
+            int tagid = 0;
             
-            String sql2="INSERT INTO file_Tag(fileID,tagID) VALUE(?,?)"; //ให้ส่งfileid tagid ขึ้นตารางใน db 
-            PreparedStatement ps2 = con.prepareStatement(sql2);
-            ps2.setInt(1, store);
-            ps2.setInt(2, tagID);
-           
-            int result2 =ps2.executeUpdate();
+            while (selectTags.next()) {               //นำ tagName ที่selectออกมาวนหา tagid
+                tagid = selectTags.getInt("tagid");
+                list.add(tagid);
+            }
             
-            Tagss.insertTag("tagName");
+            for (int i = 0; i < list.size(); i++) {
+                
+                String sql2 = "INSERT INTO file_Tag(fileID,tagID) VALUE(?,?)"; //ให้ส่งfileid tagid ขึ้นตารางใน file_tag 
+                PreparedStatement ps3 = con.prepareStatement(sql2);
+                ps3.setInt(1, fileid);
+                ps3.setInt(2, list.get(i));
+                System.out.println(list.get(i));
+                int result2 = ps3.executeUpdate();
+            }
             status = "complete";
-            
+
         } catch (SQLException e) {
             status = "incomplete";
             System.out.println(e);
@@ -79,17 +91,17 @@ public class Files extends Tagss {
         }
         return status;
     }
-    public int numCount(){
-        this.downloadCount=++numCount;
+
+    public int numCount() {
+        this.downloadCount = ++numCount;
         return downloadCount;
     }
-    
-    public static String getTimeDate(){
+
+    public static String getTimeDate() {
         Date d = new Date();
-        DateFormat fm=new SimpleDateFormat("dd-MM-yyyy");
-        String f=fm.format(d);
-        
-        
+        DateFormat fm = new SimpleDateFormat("dd-MM-yyyy");
+        String f = fm.format(d);
+
         return f;
     }
 
@@ -140,8 +152,7 @@ public class Files extends Tagss {
     public void setTags(Tagss tags) {
         this.tags = tags;
     }
-    
-    
+
     public int getFileID() {
         return fileID;
     }
@@ -149,8 +160,6 @@ public class Files extends Tagss {
     public void setFileID(int fileID) {
         this.fileID = fileID;
     }
-
-  
 
     public String getTime() {
         return time;
@@ -168,10 +177,6 @@ public class Files extends Tagss {
         this.capacity = capacity;
     }
 
-  
-
-   
-
     public int getDownloadCount() {
         return downloadCount;
     }
@@ -183,8 +188,7 @@ public class Files extends Tagss {
     public Files() {
     }
 
-  
-    
-    public void upload(File f){}
-    
+    public void upload(File f) {
+    }
+
 }

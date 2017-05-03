@@ -5,7 +5,7 @@
 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
@@ -229,7 +229,7 @@ pageEncoding="UTF-8"%>
                                                                 <div class="form-group">
                                                                     <label class="col-md-3 control-label">Tag </label>
                                                                     <div class="col-md-7">
-                                                                        <input type="text" name="tag" class="form-control" value="" placeholder="At least one tag such as mth111 midterm" data-role="tagsinput" 
+                                                                        <input type="text" name="tagname" class="form-control" value="" placeholder="At least one tag such as mth111 midterm" data-role="tagsinput" 
                                                                                style="display: none;" maxlength="50" required>
                                                                     </div>
                                                                 </div>
@@ -244,17 +244,33 @@ pageEncoding="UTF-8"%>
 
                                                             <div class="form-actions">
                                                                 <div class="col-md-offset-3 col-md-9">
-                                                                    
-                                                                    <input type="file" name="file" id="myFile" required />
                                                                     <script>
-                                                                    //binds to onchange event of your input field
-                                                                    $('#myFile').bind('change', function() {
+                                                                    var _validFileExtensions = [".pdf", ".zip", ".rar",".docx"];    
+                                                                    function ValidateSingleInput(oInput) {
+                                                                    if (oInput.type == "file") {
+                                                                    var sFileName = oInput.value;
+                                                                    if (sFileName.length > 0) {
+                                                                    var blnValid = false;
+                                                                    for (var j = 0; j < _validFileExtensions.length; j++) {
+                                                                    var sCurExtension = _validFileExtensions[j];
+                                                                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+                                                                    blnValid = true;
+                                                                    break;
+                                                                    }
+                                                                    }
 
-                                                                    //this.files[0].size gets the size of your file.
-                                                                    alert(this.files[0].size);
-
-                                                                    });
+                                                                    if (!blnValid) {
+                                                                    alert("Sorry, " + sFileName + " is invalid, allowed extensions are: " + _validFileExtensions.join(", "));
+                                                                    oInput.value = "";
+                                                                    return false;
+                                                                    }
+                                                                    }
+                                                                    }
+                                                                    return true;
+                                                                    }
                                                                     </script>
+                                                                    <input type="file" onchange="ValidateSingleInput(this);" name="file" id="myFile" required />
+
                                                                     <input type="submit" class="btn dark" value="share" onClick="" name="file">
                                                                 </div>
                                                             </div>
@@ -315,7 +331,7 @@ pageEncoding="UTF-8"%>
 
         <!-- end footer -->
         <input type="file" multiple="multiple" class="dz-hidden-input" style="visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;">
-        
+
 
 
     </body>

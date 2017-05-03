@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.lang.NullPointerException;
 import model.Files;
+import model.Tagss;
 
 @MultipartConfig // <---- ใส่เพื่อบอก ว่าจะใช้ ความสามารถของ servlet 3.0 ในการดึงข้อมูลจากไฟล์ที่อัพโหลด
 public class Upload extends HttpServlet {
@@ -27,27 +28,30 @@ public class Upload extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         Part filePart = request.getPart("file"); // เอาข้อมูลมาจาก form ที่มี input ชื่อ file โดยเป็น input type = file
+        
+        
         String detail = request.getParameter("detail"); // เรียกข้อมูลจากช่อง description มาผ่านตัวแปรชื่อ detail
         String title = request.getParameter("title");
+        String tagname =request.getParameter("tagname");
+        
        // String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // เอาชื่อไฟล์ออกมา จะมีนามสกุลติดมาด้วย ถ้าจะเอา แค่นามสกุลแล้วใช้ชื่อไฟล์ที่เจน เอง ก็ให้ใช้ substring
-        //String fileSize =Paths.get(filePart.getSubmittedFileName();
-        String insertTag =request.getParameter("tag");
+       
         InputStream fileContent = filePart.getInputStream(); // เอาข้อมูลตัวไฟล์(ที่เป้น byte)ออกมาเก็บใน inputstream เพื่อรอการเขียนไฟล์
         OutputStream outputStream = null;
         String tranPath;
-        /* String title = request.getParameter("title");
-        String tag = request.getParameter("tag");
-        String desc = request.getParameter("desc");*/
+        
         tranPath = "C:\\Users\\User\\Documents\\kademy_one4all\\OneForAll\\";
-
+        int capacity=0;
         try {
 
             outputStream // สร้าง outputStream ในการเขียนไฟล์ 
                     = new FileOutputStream(new File(tranPath+title));
+            
 
             int read = 0;
             byte[] bytes = new byte[1024]; // สร้าง byte ในการทีจะบอกว่าจะให้เขียนไฟล์ ทีละ กี่ byte
-
+            capacity = fileContent.available()/10000; //ใช้class available เพื่ออ่านตรวจความจุfile ต้องไว้ก่อน readfile!!!(/1000 เพื่อให้เก็บเป็น kb doubleเก็บไม่พอ)
+            
             while ((read = fileContent.read(bytes)) != -1) {  // เป็นการสั่งให้เขียนไฟล์ ทีละ 1024 byte ถ้าเขียนหมดแล้ว จะ return -1
                 outputStream.write(bytes, 0, read);// เขียนไฟล์ ตามจำนวน byte ที่ read มาได้ โดยให้เริ่มตั้งแต่ byte ที่ 0
             }
@@ -64,9 +68,9 @@ public class Upload extends HttpServlet {
             }
         }
      
-        System.out.println(title + "FOUNDDD");
-        Files.insertFile(title,detail,2.5,"path");
-        Files.insertTag(insertTag);
+        String storePath=tranPath+title; //เก็บpath
+        Tagss.insertTag(tagname); //tagid รันให้เอง insert tagname ก่อน insert file เพื่อที่จะส่งไป file_tag ได้ (เพื่อไม่ให้ tagId เป็น0)
+        Files.insertFile(title,detail,capacity,storePath,tagname);//เพิ่ม tagname ไว้เพื่อเอาไปหา tagId เพื่อดึงเข้า file_tag
         getServletContext().getRequestDispatcher("/success.jsp").forward(request, response);
         
     }
