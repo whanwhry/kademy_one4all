@@ -192,9 +192,9 @@
                                                                         <td>
                                                                             <a href="javascript:;">${rp.fileID}</a>
                                                                         </td>
-                                                                        <td>12</td>
+                                                                        <td>12</td> 
                                                                         <td>
-                                                                            <a href="javascript:;" class="btn btn-sm btn-default">
+                                                                            <a href="DownloadServlet?id=${rp.fileID}" class="btn btn-sm btn-default">
                                                                                 <i class="fa fa-search"></i> Download </a>
                                                                             <a href="javascript:;" class="btn btn-sm red-mint">
                                                                                 <i class="fa fa-ban"></i>Delete Sheet</a>

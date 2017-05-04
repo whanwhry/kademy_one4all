@@ -8,6 +8,10 @@
         <servlet-name>ReportServlet</servlet-name>
         <servlet-class>controller.ReportServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DownloadServlet</servlet-name>
+        <servlet-class>controller.DownloadServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>ReportServlet</servlet-name>
         <url-pattern>/ReportServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DownloadServlet</servlet-name>
+        <url-pattern>/DownloadServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
