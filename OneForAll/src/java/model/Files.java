@@ -35,7 +35,7 @@ public class Files extends Tagss {
             subTag.add(sc.next());
         }
         try {
-            Connection con = ConnectionBuilder.getConnection();
+            Connection con = ConnectionBuilder2.getConnection();
             String sql = "INSERT INTO File(fileName,detail,capacity,path) VALUE (?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, fileName);
@@ -84,7 +84,7 @@ public class Files extends Tagss {
     public String deleteFile(int fileID) {
         String status;
         try {
-            Connection con = ConnectionBuilder.getConnection();
+            Connection con = ConnectionBuilder2.getConnection();
             String sql = "DELETE FROM File WHERE FILEID=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, fileID);
