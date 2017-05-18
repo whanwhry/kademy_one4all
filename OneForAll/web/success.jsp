@@ -8,11 +8,25 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="icon" href="http://localhost:8080/OneForAll/kademy.png">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Messenger File upload</title>
+        <title>Upload Messenger</title>
+        <style>
+            body{
+            background-color: rgb(242, 242, 242);
+            }
+            .cen{
+                margin-top:200px;
+            }
+           
+        </style>
     </head>
     <body>
+        <center>
+        <div class="cen">
+            <img src="com.png" alt="success" width="150" height="150">
         <h1>Upload Complete!</h1>
-        <%=request.getAttribute("tag")%>
+        </div></center>
+        
     </body>
 </html>
