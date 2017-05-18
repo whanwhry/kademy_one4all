@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import static model.Tagss.tagID;
 
 public class Files extends Tagss {
@@ -24,11 +25,18 @@ public class Files extends Tagss {
     private Tagss tags;
 
     // method insertFile ขึ้น database ให้ส่ง filename detail(หัวข้อไฟล์) capacity path และ tagname
-    public static String insertFile(String fileName, String detail, double capacity, String path, String tagName) {
+    public static String insertFile(String fileName, String detail, double capacity, String path,String tagName) {
         String status;
+        ArrayList<String> subTag = new ArrayList();
+        ArrayList<Integer> subTagId = new ArrayList();
+        tagName=tagName.replaceAll(",", " ");
+        Scanner sc = new Scanner(tagName);
+        while(sc.hasNext()){
+            subTag.add(sc.next());
+        }
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "INSERT INTO File(fileName,detail,capacity,path) VALUE(?,?,?,?)";
+            String sql = "INSERT INTO File(fileName,detail,capacity,path) VALUE (?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, fileName);
             ps.setString(2, detail);
@@ -36,43 +44,40 @@ public class Files extends Tagss {
             ps.setString(4, path);
             int result = ps.executeUpdate();
 
-            String sqlSelectFileID = "SELECT * from File where fileName like ?"; //ให้หา filename ในfile เพื่อหา fileid
+            String sqlSelectFileID = "SELECT * from File where fileName = ?"; //ให้หา filename ในfile เพื่อหา fileid
             PreparedStatement ps1 = con.prepareStatement(sqlSelectFileID);
-            ps1.setString(1, "%" + fileName + "%");
+            ps1.setString(1, fileName);
             ResultSet select = ps1.executeQuery();
 
             int fileid = 0;
             while (select.next()) {
                 fileid = select.getInt("fileID"); //นำ filename ที่ select ออกมา วนหา fileid
             }
-
-            String selectTag = "SELECT * from Tag where tagName like ?"; //ให้นำ tagname ใน file เพื่อนำไปหา tagid
+            
+            String selectTag = "SELECT * from Tag where tagName=?"; //ให้นำ tagname ใน file เพื่อนำไปหา tagid
             PreparedStatement ps2 = con.prepareStatement(selectTag);
-            ps2.setString(1, subTag);
-            ResultSet selectTags = ps2.executeQuery();
-            ArrayList<Integer> list = new ArrayList();
-            int tagid = 0;
-            
-            while (selectTags.next()) {               //นำ tagName ที่selectออกมาวนหา tagid
-                tagid = selectTags.getInt("tagid");
-                list.add(tagid);
+            for(int i=0;i<subTag.size();i++){
+                ps2.setString(1, subTag.get(i));
+                ResultSet selectTags = ps2.executeQuery();
+                while(selectTags.next()){
+                    subTagId.add(selectTags.getInt("tagId"));
+                }
             }
             
-            for (int i = 0; i < list.size(); i++) {
-                
-                String sql2 = "INSERT INTO file_Tag(fileID,tagID) VALUE(?,?)"; //ให้ส่งfileid tagid ขึ้นตารางใน file_tag 
-                PreparedStatement ps3 = con.prepareStatement(sql2);
+            String sql2 = "INSERT INTO file_Tag(fileID,tagID) VALUE(?,?)"; //ให้ส่งfileid tagid ขึ้นตารางใน file_tag 
+            PreparedStatement ps3 = con.prepareStatement(sql2);
+            for(int i=0;i<subTagId.size();i++){
                 ps3.setInt(1, fileid);
-                ps3.setInt(2, list.get(i));
-                System.out.println(list.get(i));
-                int result2 = ps3.executeUpdate();
+                ps3.setInt(2,subTagId.get(i));
+                ps3.executeUpdate();
             }
+            
             status = "complete";
-
         } catch (SQLException e) {
             status = "incomplete";
             System.out.println(e);
         }
+        subTag.clear();
         return status;
     }
 

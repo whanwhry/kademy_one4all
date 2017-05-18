@@ -2,15 +2,14 @@ package model;
 
 import java.sql.*;
 import java.util.*;
+import java.io.*;
 
 public class Tagss {
 
     protected static int tagID;
     private String tagname;
     private static int listTagID;
-    static String subTag;
-    static String subTag2;
-    
+
     public List<Tagss> listTag() {
 
         List<Tagss> listTags = null;
@@ -35,64 +34,43 @@ public class Tagss {
         return listTags;
     }
 
-    public static void main(String[] args) {
-        String s = "ff,fame,zafsd";
-        int j = 0;
-        int k = s.indexOf(",", 10);
-        System.out.println(k);
-        for (int i = 0; i < s.length(); i++) {
-            j = s.indexOf(",", i);
-            if (i > j) {
-                String sub = s.substring(i);
-                System.out.println(sub);
-                break;
-            } else {
-                String sub = s.substring(i, j);
-                System.out.println(sub);
-                System.out.println(j);
-                i = j;
-            }
-        }
-        String a = insertTag(s);
-    }
-
     public static String insertTag(String tagname) {
+        String[] subTag = null;
         String status = "";
         int col = 0;
         int index = 0;
         try {
+            subTag=tagname.split(",");
+            for (int i = 0; i < subTag.length; i++) {
+                System.out.println("tag = "+ subTag[i]);
+                System.out.println("[before]subTag = "+subTag[i]);
+            }
             Connection con = ConnectionBuilder.getConnection();
-            String sqlSelect = "Select * from Tag";
-            PreparedStatement ps = con.prepareStatement(sqlSelect);
-
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                if (tagname.equals(rs.getString("tagName"))) {
-                    Tagss l = new Tagss();
-                    l.setTagname(rs.getString(tagname));
-                    //listTagID = rs.getInt(tagID);
+            String sqlchecktag = "Select * from tag where tagname=?";
+            PreparedStatement ps1 = con.prepareStatement(sqlchecktag);
+            for(int i=0;i<subTag.length;i++){
+                ps1.setString(1, subTag[i]);
+                ResultSet rs1 = ps1.executeQuery();
+                int id = 0;
+                if(rs1.next()){
+                    subTag[i] = null;
+                    id = rs1.getInt("tagId");
                 }
             }
-            for (index = 0; index < tagname.length(); index++) {
-                col = tagname.indexOf(",", index);
-                if (index > col) {
-                    subTag = tagname.substring(index);
-                    String sql = "INSERT INTO tag (tagName) VALUES (?)";
-                    PreparedStatement ps2 = con.prepareStatement(sql);
-                    ps2.setString(1, subTag);
+            //insert tag ที่ไม่ซ้ำลง db
+            for (int j = 0; j <subTag.length; j++) {
+                String sql = "INSERT INTO tag (tagName) VALUES (?)";
+                PreparedStatement ps2 = con.prepareStatement(sql);
+                if(subTag[j]!=null){
+                    ps2.setString(1, subTag[j]);
                     int result = ps2.executeUpdate();
-                    status = "complete";
-                    break;
-                } else {
-                    subTag = tagname.substring(index, col);
-                    index = col;
-                }
-                    String sql = "INSERT INTO tag (tagName) VALUES (?)";
-                    PreparedStatement ps2 = con.prepareStatement(sql);
-                    ps2.setString(1, subTag);
-                    int result = ps2.executeUpdate();
-                    status = "complete";
-                
+                    if(result > 0){
+                        status = "complete";
+                    }
+                }  
+            }
+            for(int i=0;i<subTag.length;i++){
+                System.out.println("subTag = "+subTag[i]);
             }
         } catch (SQLException e) {
             status = "Incomplete";
