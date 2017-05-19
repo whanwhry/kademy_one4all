@@ -1,19 +1,72 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+/**
+ *
+ * @author KARTOON
+ */
 public class Users {
-    private int userID;
-    private String name;
-    private String surname;
-    private int ratingID;
 
-    public int getUserID() {
-        return userID;
+    private long stID;
+    private int ratingID, type;
+    private String name, surName, password;
+    private static String msg;
+
+    public Users() {
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public Users(long stID, String password) {
+        this.stID = stID;
+        this.password = password;
+    }
+
+    public Users(long stID, int ratingID, String name, String surName, String password) {
+        this.stID = stID;
+        this.ratingID = ratingID;
+        this.name = name;
+        this.surName = surName;
+        this.password = password;
+    }
+
+    public static String getMsg() {
+        return msg;
+    }
+
+    public static void setMsg(String msg) {
+        Users.msg = msg;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public long getStID() {
+        return stID;
+    }
+
+    public void setStID(long stID) {
+        this.stID = stID;
+    }
+
+    public int getRatingID() {
+        return ratingID;
+    }
+
+    public void setRatingID(int ratingID) {
+        this.ratingID = ratingID;
     }
 
     public String getName() {
@@ -24,20 +77,63 @@ public class Users {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getSurName() {
+        return surName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSurName(String surName) {
+        this.surName = surName;
     }
 
-    public int getRatingID() {
-        return ratingID;
+    public String getPassword() {
+        return password;
     }
 
-    public void setRatingID(int ratingID) {
-        this.ratingID = ratingID;
+    public void setPassword(String password) {
+        this.password = password;
     }
-    
+
+    public static Users checkType(String username) {
+        Users typeId = null;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "select Type from Users where stID like ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                typeId = new Users();
+                typeId.setType(rs.getInt("Type"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return typeId;
+    }
+
+    public boolean logIn(long stID, String password) {
+        boolean result = false;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "select stID,password from Users where stID = ? and password = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setLong(1, stID);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();//ดึงข้อมูลจากDBมาเก็บในนี้แล้วเอาไปทำอะไรต่อ 
+            if (rs.next()) {
+                Users us = new Users();
+                us.setPassword(rs.getString("password"));
+                us.setStID(rs.getLong("stID"));
+                result = true;
+            } else {
+                msg = "Username or Password is incorrect.";
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return result;
+
+    }
+
 }
+

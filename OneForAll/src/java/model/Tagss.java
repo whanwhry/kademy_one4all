@@ -14,7 +14,7 @@ public class Tagss {
 
         List<Tagss> listTags = null;
         try {
-            Connection con = ConnectionBuilder2.getConnection();
+            Connection con = ConnectionBuilder.getConnection();
             String sql = "select * from Tag ";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -45,7 +45,7 @@ public class Tagss {
                 System.out.println("tag = "+ subTag[i]);
                 System.out.println("[before]subTag = "+subTag[i]);
             }
-            Connection con = ConnectionBuilder2.getConnection();
+            Connection con = ConnectionBuilder.getConnection();
             String sqlchecktag = "Select * from tag where tagname=?";
             PreparedStatement ps1 = con.prepareStatement(sqlchecktag);
             for(int i=0;i<subTag.length;i++){
