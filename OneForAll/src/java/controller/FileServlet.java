@@ -1,21 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package controller;
+package contoller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.File;
 
-/**
- *
- * @author User
- */
+import model.Tag;
+
+@WebServlet(name = "FileServlet", urlPatterns = {"/FileServlet"})
 public class FileServlet extends HttpServlet {
 
     /**
@@ -30,18 +28,63 @@ public class FileServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet FileServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet FileServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+
+        String name = request.getParameter("filename"); //สตริงเพราะจาวาแสดงค่าออกเป็นสตริง
+
+        List<File> f = File.findByName(name);
+        List<Tag> ft = Tag.findByTag(name);
+        
+        
+        List<Tag> tt = Tag.listTags();
+        request.setAttribute("tt", tt);
+        List<File> lf = File.listFileByTime();
+        for (int i = 0; i < lf.size()-1; i++) {     
+            List<Tag> tagNames = Tag.showTag(lf.get(i).getFileName());
+            request.setAttribute("lf", lf);
+            request.setAttribute("tagNames", tagNames);
         }
+       // request.setAttribute("lf", lf);
+        
+        if (f == null) {
+            System.out.println("eiei");
+            if (ft == null) {
+                request.setAttribute("msg", "Not Found File or Tag : " + name);
+                System.out.println("kiki");
+            } else {
+                List<Tag> t = Tag.showTag(name);
+                request.setAttribute("t", t);
+                request.setAttribute("ft", ft);
+                System.out.println("grigri");
+            }
+
+        } else {
+            request.setAttribute("f", f);
+
+            List<Tag> t = Tag.showTag(name);
+
+            request.setAttribute("t", t);
+            System.out.println(name);
+        }
+        getServletContext().getRequestDispatcher("/home.jsp").forward(request, response); //เชื่อมหน้าที่แสดงผล
+
+        /* if (name.equals("")) {
+            request.setAttribute("msg", "Not Found File : " + name);
+        } else {
+            request.setAttribute("f", f);
+            char c = name.charAt(0);
+            if (c == '#') {
+                List<Tag> t = Tag.findByTag(name);
+                System.out.println("sdfsdfdfdsfdsfd");
+                if (t == null) {
+                    request.setAttribute("msg", "Not Found Tag : " + name + "555");
+                } else {
+                    request.setAttribute("t", t);
+                    System.out.println("fdsfdsfdsfdsfdsfdsdsfdfdsfdsf");
+                }
+
+            }
+        }*/
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -82,5 +125,4 @@ public class FileServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

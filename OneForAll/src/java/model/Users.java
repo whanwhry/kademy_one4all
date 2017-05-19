@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class Users {
 
     private long stID;
-    private int ratingID, type;
+    private int  type;
     private String name, surName, password;
     private static String msg;
 
@@ -29,9 +29,9 @@ public class Users {
         this.password = password;
     }
 
-    public Users(long stID, int ratingID, String name, String surName, String password) {
+    public Users(long stID,String name, String surName, String password) {
         this.stID = stID;
-        this.ratingID = ratingID;
+        
         this.name = name;
         this.surName = surName;
         this.password = password;
@@ -61,13 +61,7 @@ public class Users {
         this.stID = stID;
     }
 
-    public int getRatingID() {
-        return ratingID;
-    }
-
-    public void setRatingID(int ratingID) {
-        this.ratingID = ratingID;
-    }
+ 
 
     public String getName() {
         return name;
