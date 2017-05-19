@@ -214,7 +214,7 @@
                                                                         <i class="icon-magnifier"></i>
                                                                        
                                                                         <form action="FileServlet" method="post">
-                                                                            <input type="text" name="filename">
+                                                                            <input type="text" class="form-control" width="200px" placeholder="Search by keywords" name="filename">
                                                                             <input type="submit" value="Search">
                                                                         </form>
                                                                     </div>
@@ -232,12 +232,13 @@
                                                             <a href="https://int305-kademy.firebaseapp.com/one-4-all.html#tab_1_2" data-toggle="tab">Top Download</a>
                                                         </li>
                                                     </ul>
+                                                     
                                                     <div class="todo-container">
                                                         <ul class="todo-projects-container">
                                                             <p>${msg}</p>
                                                             <c:forEach items="${f}" var="c" varStatus="vs">
                                                              <li class="todo-projects-item">
-                                                                 <h3>${c.fileName}</h3>
+                                                                 <h3 > <a href="" style="color: black">${c.fileName}</a></h3>
                                                                  <p>${c.detail}</p>
                                                                  <p>
                                                                      <c:forEach items="${t}" var="c2" varStatus="vs">
@@ -245,15 +246,32 @@
                                                                      </c:forEach>
                                                                  </p>
                                                                  <div class="todo-project-item-foot">
-                                                                     <p class="todo-red todo-inline"><h3>${c.stID}</h3></p>
-                                                                     <p class="todo-inline todo-float-r">30 NOV 2016 - 15 downloads
+                                                                     <p class="todo-red todo-inline"><p>${c.stID}</p></p>
+                                                                     <p class="todo-inline todo-float-r">${c.d} ${c.t}
                                                                      </p>
                                                                  </div>
                                                              </li>
                                                              <div class="todo-projects-divider"></div>
                                                             </c:forEach>
                                                              
-                                                           
+                                                           <c:forEach items="${lf}" var="c5" varStatus="vs">
+                                                             <li class="todo-projects-item">
+                                                                 <h3 > <a href="" style="color: black">${c5.fileName}</a></h3>
+                                                                 <p>list by time<P>
+                                                                 <p>${c5.detail}</p>
+                                                                 <p>
+                                                                     <c:forEach items="${tagNames}" var="c6" varStatus="vs">
+                                                                         <span class="label label-sm label-info labelTag">${c6.tagName}</span>     
+                                                                     </c:forEach>
+                                                                 </p>
+                                                                 <div class="todo-project-item-foot">
+                                                                     <p class="todo-red todo-inline"><p>${c5.stID}</p></p>
+                                                                     <p class="todo-inline todo-float-r">${c5.d} ${c5.t}
+                                                                     </p>
+                                                                 </div>
+                                                             </li>
+                                                             <div class="todo-projects-divider"></div>
+                                                            </c:forEach>
 
                                                         </ul>																																																	<div class="todo-projects-divider"></div>
                                                     </div>
@@ -286,74 +304,38 @@
                                                 </div>
                                                 <div class="portlet-body form">
                                                     <div class="row">
-                                                        <div class="col-md-4">
+                                                        <a href="">
+                                                            
+                                                           <c:forEach items="${tt}" var="c3" varStatus="vs">
+                                                                         
+                                                             <div class="col-md-4">
 
                                                             <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white  "> #MTH111 </div>
+                                                                <div class="color-view font-white  "> ${c3.tagName }</div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                         </c:forEach>
+                                                            
+                                                           <c:forEach items="${t}" var="c2" varStatus="vs">
+                                                                         
+                                                             <div class="col-md-4">
 
                                                             <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white  "> #MTH102 </div>
+                                                                <div class="color-view font-white  "> ${c2.tagName }</div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                         </c:forEach>
+                                                            
+                                                          <c:forEach items="${ft}" var="c4" varStatus="vs">
+                                                                         
+                                                             <div class="col-md-4">
+
                                                             <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white  "> #CALCULUS </div>
+                                                                <div class="color-view font-white  "> ${c4.tagName }</div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white "> #PHY101 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white "> #PHY102 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white "> #PHYSIC </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white "> #GEN241 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white "> #GEN231 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white"> #JAVA </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white "> #VUE.JS </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white "> #REACT.JS </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white"> #FIREBASE </div>
-                                                            </div>
-                                                        </div>
+                                                         </c:forEach>
+                                                        </a>
                                                     </div>
                                                     <div class="search-pagination">
                                                         <ul class="pagination">
