@@ -6,6 +6,7 @@
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
         <title>KADEMY | STRONGEST LEARNING PLATFORM FOR KMUTT STUDENT</title>
+        <link rel="icon" href="http://localhost:8080/OneForAll/kademy.png">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport">
         <link href="./admin_files/css" rel="stylesheet" type="text/css">

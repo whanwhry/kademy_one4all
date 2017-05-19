@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0052)https://int305-kademy.firebaseapp.com/one-4-all.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+        <link rel="icon" href="http://localhost:8080/OneForAll/kademy.png">
         <title>KADEMY | STRONGEST LEARNING PLATFORM FOR KMUTT STUDENT</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport">
