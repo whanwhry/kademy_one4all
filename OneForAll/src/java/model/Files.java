@@ -36,7 +36,7 @@ public class Files extends Tagss {
         }
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "INSERT INTO File(fileName,detail,capacity,path) VALUE (?,?,?,?)";
+            String sql = "INSERT INTO file(fileName,detail,capacity,path) VALUE (?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, fileName);
             ps.setString(2, detail);
@@ -44,14 +44,14 @@ public class Files extends Tagss {
             ps.setString(4, path);
             int result = ps.executeUpdate();
 
-            String sqlSelectFileID = "SELECT * from File where fileName = ?"; //ให้หา filename ในfile เพื่อหา fileid
+            String sqlSelectFileID = "SELECT * from file where fileName = ?"; //ให้หา filename ในfile เพื่อหา fileid
             PreparedStatement ps1 = con.prepareStatement(sqlSelectFileID);
             ps1.setString(1, fileName);
             ResultSet select = ps1.executeQuery();
 
             int fileid = 0;
             while (select.next()) {
-                fileid = select.getInt("fileID"); //นำ filename ที่ select ออกมา วนหา fileid
+                fileid = select.getInt("fileId"); //นำ filename ที่ select ออกมา วนหา fileid
             }
             
             String selectTag = "SELECT * from Tag where tagName=?"; //ให้นำ tagname ใน file เพื่อนำไปหา tagid
@@ -64,7 +64,7 @@ public class Files extends Tagss {
                 }
             }
             
-            String sql2 = "INSERT INTO file_Tag(fileID,tagID) VALUE(?,?)"; //ให้ส่งfileid tagid ขึ้นตารางใน file_tag 
+            String sql2 = "INSERT INTO file_Tag(fileId,tagId) VALUE(?,?)"; //ให้ส่งfileid tagid ขึ้นตารางใน file_tag 
             PreparedStatement ps3 = con.prepareStatement(sql2);
             for(int i=0;i<subTagId.size();i++){
                 ps3.setInt(1, fileid);
@@ -85,7 +85,7 @@ public class Files extends Tagss {
         String status;
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "DELETE FROM File WHERE FILEID=?";
+            String sql = "DELETE FROM file WHERE fileId=?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, fileID);
             int result = ps.executeUpdate();

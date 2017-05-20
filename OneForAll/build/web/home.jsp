@@ -207,7 +207,7 @@
                                             <div class="portlet light">
                                                 <div class="portlet-title">
                                                     <div class="caption font-kademy">
-                                                        <span class="caption-subject bold uppercase">			<img src="./KADEMY_files/one4all_v3_white.png"> ONE FOR ALL <a href="https://int305-kademy.firebaseapp.com/upload.jsp"><button style="margin-left : 30px;" class="btn dark">Share yours</button></a></span>
+                                                        <span class="caption-subject bold uppercase">			<img src="./KADEMY_files/one4all_v3_white.png"> ONE FOR ALL <a href="upload.jsp"><button style="margin-left : 30px;" class="btn dark">Share yours</button></a></span>
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="search-filter">
