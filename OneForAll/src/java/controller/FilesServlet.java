@@ -7,23 +7,19 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.ReportFile;
-import model.Users;
+import model.File;
+import model.Tag;
 
 /**
  *
  * @author KARTOON
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+public class FilesServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,39 +32,49 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         response.setContentType("text/html;charset=UTF-8");
-        String userN = request.getParameter("Username");
-        String passW = request.getParameter("Password");
-        Users us = new Users();
-        try {
-            //long usn = Long.parseLong(userN);
-            boolean login = us.logIn(userN, passW);
-            if (login == true) {
-                int type = us.checkType(userN).getType();
-                if (type == 0) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("username", userN);
-                    getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
-                } else {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("username", userN);
-                    List<ReportFile> rpf = ReportFile.listReportFile();
-                    request.setAttribute("report", rpf);
-                    getServletContext().getRequestDispatcher("/Admin.jsp").forward(request, response);
-                }
+
+        String name = request.getParameter("filename"); //สตริงเพราะจาวาแสดงค่าออกเป็นสตริง
+
+        List<File> f = File.findByName(name);
+        List<Tag> ft = Tag.findByTag(name);
+
+        List<Tag> tt = Tag.listTags();
+        request.setAttribute("tt", tt);
+        List<File> lf = File.listFileByTime();
+//        for (int i = 0; i < lf.size() - 1; i++) {
+//            List<Tag> tagNames = Tag.showTag(lf.get(i).getFileName());
+//            request.setAttribute("lf", lf);
+//            request.setAttribute("tagNames", tagNames);
+//        }
+        request.setAttribute("lf", lf);
+
+        if (f == null) {
+            System.out.println("eiei");
+            if (ft == null) {
+                request.setAttribute("msg", "Not Found File or Tag : " + name);
+                System.out.println("kiki");
             } else {
-                request.setAttribute("msg",Users.getMsg());
-                getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
+                List<Tag> t = Tag.showTag(name);
+                request.setAttribute("t", t);
+                request.setAttribute("ft", ft);
+                System.out.println("grigri");
             }
-            
-        } catch (NumberFormatException e) {
-            request.setAttribute("msg","Please fill username with number");
-            getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);
+
+        } else {
+            request.setAttribute("f", f);
+
+            List<Tag> t = Tag.showTag(name);
+
+            request.setAttribute("t", t);
+            System.out.println(name);
         }
+        getServletContext().getRequestDispatcher("/home.jsp").forward(request, response); //เชื่อมหน้าที่แสดงผล
 
     }
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *

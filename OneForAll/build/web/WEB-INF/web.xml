@@ -24,6 +24,10 @@
         <servlet-name>FileServlet</servlet-name>
         <servlet-class>controller.FileServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FilesServlet</servlet-name>
+        <servlet-class>controller.FilesServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>search</servlet-name>
         <url-pattern>/search</url-pattern>
@@ -48,9 +52,16 @@
         <servlet-name>FileServlet</servlet-name>
         <url-pattern>/FileServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FilesServlet</servlet-name>
+        <url-pattern>/FilesServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>Login.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

@@ -153,7 +153,7 @@ public class File {
         List<File> cl = null;//สร้างอาเรย์ลิสเพื่อที่เก็บชื่อเป็นลิส
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "select * from file where fileName like ?"
+                String sql = "select * from file where fileName like ?"
                     + " order by time DESC";//ใช้ภาษาsqlหาชื่อ
             PreparedStatement st = con.prepareStatement(sql);// เตรียมคำสั่งนี้ให้สมบูรณ์(ข้างบน)
             st.setString(1, "%" + name + "%");//ใช้"%"เพื่อที่หลังจากตัวอักษรที่หาจะเป็นอะไรก็ได้
@@ -162,7 +162,7 @@ public class File {
                 File cus = new File();
                 cus.setFileName(rs.getString("fileName"));
                 cus.setDetail(rs.getString("detail"));
-                cus.setStID(rs.getLong("stID"));
+                cus.setStID(rs.getLong("userId"));
                 cus.setT(rs.getTime("time"));
                 cus.setD(rs.getDate("time"));
                 if (cl == null) {//ถ้าไม่เจอให่สร้างอาเรย์

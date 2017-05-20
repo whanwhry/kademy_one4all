@@ -263,7 +263,7 @@ public final class home_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                                                    <div class=\"input-icon right\">\n");
       out.write("                                                                        <i class=\"icon-magnifier\"></i>\n");
       out.write("                                                                       \n");
-      out.write("                                                                        <form action=\"FileServlet\" method=\"post\">\n");
+      out.write("                                                                        <form action=\"FilesServlet\" method=\"post\">\n");
       out.write("                                                                            <input type=\"text\" class=\"form-control\" width=\"200px\" placeholder=\"Search by keywords\" name=\"filename\">\n");
       out.write("                                                                            <input type=\"submit\" value=\"Search\">\n");
       out.write("                                                                        </form>\n");

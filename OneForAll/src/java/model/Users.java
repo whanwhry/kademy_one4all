@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 public class Users {
 
-    private long stID;
+    private String username;
     private int  type;
     private String name, surName, password;
     private static String msg;
@@ -24,13 +24,13 @@ public class Users {
     public Users() {
     }
 
-    public Users(long stID, String password) {
-        this.stID = stID;
+    public Users(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public Users(long stID,String name, String surName, String password) {
-        this.stID = stID;
+    public Users(String username,String name, String surName, String password) {
+        this.username = username;
         
         this.name = name;
         this.surName = surName;
@@ -53,12 +53,12 @@ public class Users {
         this.type = type;
     }
 
-    public long getStID() {
-        return stID;
+    public String getStID() {
+        return username;
     }
 
-    public void setStID(long stID) {
-        this.stID = stID;
+    public void setStID(String username) {
+        this.username = username;
     }
 
  
@@ -91,7 +91,7 @@ public class Users {
         Users typeId = null;
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "select Type from Users where stID like ?";
+            String sql = "select Type from user where username like ?";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
@@ -105,19 +105,19 @@ public class Users {
         return typeId;
     }
 
-    public boolean logIn(long stID, String password) {
+    public boolean logIn(String username, String password) {
         boolean result = false;
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "select stID,password from Users where stID = ? and password = ?";
+            String sql = "select username,password from user where username = ? and password = ?";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setLong(1, stID);
+            ps.setString(1, username);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();//ดึงข้อมูลจากDBมาเก็บในนี้แล้วเอาไปทำอะไรต่อ 
             if (rs.next()) {
                 Users us = new Users();
                 us.setPassword(rs.getString("password"));
-                us.setStID(rs.getLong("stID"));
+                us.setStID(rs.getString("username"));
                 result = true;
             } else {
                 msg = "Username or Password is incorrect.";

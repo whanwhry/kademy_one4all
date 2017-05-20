@@ -214,7 +214,7 @@
                                                                     <div class="input-icon right">
                                                                         <i class="icon-magnifier"></i>
                                                                        
-                                                                        <form action="FileServlet" method="post">
+                                                                        <form action="FilesServlet" method="post">
                                                                             <input type="text" class="form-control" width="200px" placeholder="Search by keywords" name="filename">
                                                                             <input type="submit" value="Search">
                                                                         </form>
