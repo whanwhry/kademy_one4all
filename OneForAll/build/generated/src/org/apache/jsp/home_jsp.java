@@ -256,7 +256,7 @@ public final class home_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                            <div class=\"portlet light\">\n");
       out.write("                                                <div class=\"portlet-title\">\n");
       out.write("                                                    <div class=\"caption font-kademy\">\n");
-      out.write("                                                        <span class=\"caption-subject bold uppercase\">\t\t\t<img src=\"./KADEMY_files/one4all_v3_white.png\"> ONE FOR ALL <a href=\"https://int305-kademy.firebaseapp.com/upload-conclude.html\"><button style=\"margin-left : 30px;\" class=\"btn dark\">Share yours</button></a></span>\n");
+      out.write("                                                        <span class=\"caption-subject bold uppercase\">\t\t\t<img src=\"./KADEMY_files/one4all_v3_white.png\"> ONE FOR ALL <a href=\"https://int305-kademy.firebaseapp.com/upload.jsp\"><button style=\"margin-left : 30px;\" class=\"btn dark\">Share yours</button></a></span>\n");
       out.write("                                                        <div class=\"row\">\n");
       out.write("                                                            <div class=\"col-md-12\">\n");
       out.write("                                                                <div class=\"search-filter\">\n");
