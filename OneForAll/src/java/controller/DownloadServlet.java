@@ -33,6 +33,7 @@ public class DownloadServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try {
             int id = Integer.parseInt(request.getParameter("id"));
 
@@ -44,7 +45,7 @@ public class DownloadServlet extends HttpServlet {
                 return;
             }
             // file1.zip, file2.zip
-            String fileName = download.getFileName();
+            String fileName = download.getPath();
             System.out.println("File Name: " + fileName);
 
             // abc.txt => text/plain
@@ -57,7 +58,7 @@ public class DownloadServlet extends HttpServlet {
 
             response.setHeader("Content-Length", String.valueOf(download.getFileBlob().length()));
 
-            response.setHeader("Content-Disposition", "inline; filename=\"" + download.getFileName() + "\"");
+            response.setHeader("Content-Disposition", "inline; filename=\"" + download.getPath()+ "\"");
 
             // For big BLOB data.
             Blob fileData = download.getFileBlob();

@@ -8,17 +8,16 @@ package controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Files;
 
 /**
  *
  * @author KARTOON
  */
-@WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
-public class LogoutServlet extends HttpServlet {
+public class DeleteServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,8 +30,18 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().invalidate();//คำสั่งที่ใช้ในการเคลียร์ session
-        getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);//เมื่อทำการล็อคเอ้าออกให้ออกจากหน้าเว็บที่เข้าอยู่กลับไปที่หน้าล็อคอิน
+        response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        String deleteID = request.getParameter("id");
+        try {
+            int deleteFile = Integer.parseInt(deleteID);
+            Files.deleteFile(deleteFile);
+            
+            getServletContext().getRequestDispatcher("/ShowDetailServlet").forward(request, response);
+            
+        } catch (Exception e) {
+            throw new ServletException(e);
+        } 
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.Files;
 import model.ReportFile;
 import model.Users;
 
@@ -37,6 +38,8 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
         String userN = request.getParameter("Username");
         String passW = request.getParameter("Password");
         Users us = new Users();
@@ -46,12 +49,16 @@ public class LoginServlet extends HttpServlet {
             if (login == true) {
                 int type = us.checkType(userN).getType();
                 if (type == 0) {
+                    Users id = Users.getUserIdSession(userN, passW);
                     HttpSession session = request.getSession();
                     session.setAttribute("username", userN);
-                    getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+                    session.setAttribute("userId", id.getUserId());
+                    request.setAttribute("searchAll", Files.listFileByTime(id.getUserId()));
+                    getServletContext().getRequestDispatcher("/HomeServlet").forward(request, response);
                 } else {
                     HttpSession session = request.getSession();
                     session.setAttribute("username", userN);
+                   
                     List<ReportFile> rpf = ReportFile.listReportFile();
                     request.setAttribute("report", rpf);
                     getServletContext().getRequestDispatcher("/Admin.jsp").forward(request, response);

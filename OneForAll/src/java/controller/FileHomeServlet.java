@@ -7,18 +7,19 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Files;
+import model.Tag;
 
 /**
  *
  * @author KARTOON
  */
-@WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
-public class LogoutServlet extends HttpServlet {
+public class FileHomeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,8 +32,45 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getSession().invalidate();//คำสั่งที่ใช้ในการเคลียร์ session
-        getServletContext().getRequestDispatcher("/Login.jsp").forward(request, response);//เมื่อทำการล็อคเอ้าออกให้ออกจากหน้าเว็บที่เข้าอยู่กลับไปที่หน้าล็อคอิน
+        response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        Object id = request.getSession().getAttribute("userId");
+        String name = request.getParameter("filename"); //สตริงเพราะจาวาแสดงค่าออกเป็นสตริง
+
+        try {
+            int ids = Integer.parseInt(id.toString());
+            List<Files> nameSearch = Files.findByName(name);
+            List<Tag> nameTag = Tag.findByTag(name);
+
+           
+            List<Files> searchAll = Files.listFileByTime(ids);
+
+            if (nameSearch == null) {
+                System.out.println("eiei");
+                if (nameTag == null) {
+                    request.setAttribute("msg", "Not Found File or Tag : " + name);
+                    System.out.println("kiki");
+                } else {
+                    List<Tag> tagMatch = Tag.showTag(name);
+                    request.setAttribute("tagMatch", tagMatch);
+                    request.setAttribute("nameTag", nameTag);
+                    System.out.println("grigri");
+                }
+
+            } else {
+                request.setAttribute("nameSearch", nameSearch);
+
+                List<Tag> showTagMatch = Tag.showTag(name);
+
+                request.setAttribute("showTagMatch", showTagMatch);
+                System.out.println(name);
+            }
+            request.setAttribute("name", name);
+            getServletContext().getRequestDispatcher("/home.jsp").forward(request, response); //เชื่อมหน้าที่แสดงผล
+        } catch (NumberFormatException e) {
+            System.out.println(e);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

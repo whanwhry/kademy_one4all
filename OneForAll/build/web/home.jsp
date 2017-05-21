@@ -127,7 +127,7 @@
                                         <!-- BEGIN USER LOGIN DROPDOWN -->
                                         <li class="dropdown dropdown-user dropdown-dark">
                                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
-                                                <span class="username">MR . Patchara Leelalumplert</span>
+                                                <span class="username"><%out.print("Hello  " + session.getAttribute("username"));%></span>
                                             </a>
                                             <ul class="dropdown-menu dropdown-menu-default">
                                                 <li>
@@ -136,7 +136,7 @@
                                                 </li>
                                                 <li class="divider"> </li>
                                                 <li>
-                                                    <a href="https://int305-kademy.firebaseapp.com/page_user_login_1.html">
+                                                    <a href="LogoutServlet">
                                                         <i class="icon-key"></i> Log Out </a>
                                                 </li>
                                             </ul>
@@ -145,7 +145,7 @@
                                         <!-- BEGIN QUICK SIDEBAR TOGGLER -->
                                         <li class="dropdown dropdown-extended quick-sidebar-toggler">
                                             <span class="sr-only">Toggle Quick Sidebar</span>
-                                            <i class="icon-logout"></i>
+                                            <i  class="icon-logout"></i>
                                         </li>
                                         <!-- END QUICK SIDEBAR TOGGLER -->
                                     </ul>
@@ -207,17 +207,27 @@
                                             <div class="portlet light">
                                                 <div class="portlet-title">
                                                     <div class="caption font-kademy">
-                                                        <span class="caption-subject bold uppercase">			<img src="./KADEMY_files/one4all_v3_white.png"> ONE FOR ALL <a href="upload.jsp"><button style="margin-left : 30px;" class="btn dark">Share yours</button></a></span>
+                                                        <span class="caption-subject bold uppercase">			
+                                                            <img src="./KADEMY_files/one4all_v3_white.png"> ONE FOR ALL <a href="upload.jsp"><button style="margin-left : 30px;" class="btn dark">Share yours</button></a></span>
                                                         <div class="row">
                                                             <div class="col-md-12">
                                                                 <div class="search-filter">
                                                                     <div class="input-icon right">
-                                                                        <i class="icon-magnifier"></i>
-                                                                       
-                                                                        <form action="FilesServlet" method="post">
-                                                                            <input type="text" class="form-control" width="200px" placeholder="Search by keywords" name="filename">
-                                                                            <input type="submit" value="Search">
+                                                                        
+
+                                                                        <form action="FileHomeServlet" method="post">
+                                                                            <div style="float:left; ">
+                                                                                <input type="text" class="form-control" width="200px" placeholder="Search by keywords" name="filename" >
+                                                                            </div>
+                                                                            
+                                                                          
+                                                                            <div class="portlet-title">
+                                                                            <button style="width:100px; height: 34px; color:#f50;font-size:16px" class="btn btn-default ">
+                                                                                Search</button>
+                                                                            </div>
                                                                         </form>
+                                                                       
+                                                                        
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -226,54 +236,64 @@
                                                 </div>
                                                 <div class="portlet-body form">
                                                     <ul class="nav nav-tabs">
-                                                        <li class="active">
-                                                            <a href="https://int305-kademy.firebaseapp.com/one-4-all.html#tab_1_1" data-toggle="tab">Newest</a>
-                                                        </li>
                                                         <li>
-                                                            <a href="https://int305-kademy.firebaseapp.com/one-4-all.html#tab_1_2" data-toggle="tab">Top Download</a>
+                                                            <a href="HomeServlet">Newest</a>
                                                         </li>
+                                                        
                                                     </ul>
-                                                     
+
                                                     <div class="todo-container">
                                                         <ul class="todo-projects-container">
                                                             <p>${msg}</p>
-                                                            <c:forEach items="${f}" var="c" varStatus="vs">
-                                                             <li class="todo-projects-item">
-                                                                 <h3 > <a href="" style="color: black">${c.fileName}</a></h3>
-                                                                 <p>${c.detail}</p>
-                                                                 <p>
-                                                                     <c:forEach items="${t}" var="c2" varStatus="vs">
-                                                                         <span class="label label-sm label-info labelTag">${c2.tagName}</span>     
-                                                                     </c:forEach>
-                                                                 </p>
-                                                                 <div class="todo-project-item-foot">
-                                                                     <p class="todo-red todo-inline"><p>${c.stID}</p></p>
-                                                                     <p class="todo-inline todo-float-r">${c.d} ${c.t}
-                                                                     </p>
-                                                                 </div>
-                                                             </li>
-                                                             <div class="todo-projects-divider"></div>
+                                                            <%
+                                                                if (request.getAttribute("name") != null) {
+                                                            %>
+                                                            <c:forEach items="${nameSearch}" var="c" varStatus="vs">
+                                                                <li class="todo-projects-item">
+                                                                    <h3 > <a href="" style="color: black; float: left;">${c.fileName}</a></h3>
+                                                                    <a href="DownloadServlet?id=${c.fileID}" class="btn btn-sm btn-default" style="float: right;">
+                                                                                 Download </a>
+                                                                    <p style="clear: both;">${c.detail}</p>
+                                                                    <p >
+                                                                        <c:forEach items="${showTagMatch}" var="c2" varStatus="vs">
+                                                                            <span class="label label-sm label-info labelTag">${c2.tagName}</span>     
+                                                                        </c:forEach>
+                                                                    </p>
+                                                                    
+                                                                    
+                                                                    <div class="todo-project-item-foot">
+                                                                        <p class="todo-red todo-inline"><p>${c.username}</p></p>
+                                                                        <p class="todo-inline todo-float-r">${c.d} ${c.t}
+                                                                        </p>
+                                                                    </div>
+                                                                </li>
+                                                                <div class="todo-projects-divider"></div>
                                                             </c:forEach>
-                                                             
-                                                           <c:forEach items="${lf}" var="c5" varStatus="vs">
-                                                             <li class="todo-projects-item">
-                                                                 <h3 > <a href="" style="color: black">${c5.fileName}</a></h3>
-                                                                 <p>list by time<P>
-                                                                 <p>${c5.detail}</p>
-                                                                 <p>
-                                                                     <c:forEach items="${tagNames}" var="c6" varStatus="vs">
-                                                                         <span class="label label-sm label-info labelTag">${c6.tagName}</span>     
-                                                                     </c:forEach>
-                                                                 </p>
-                                                                 <div class="todo-project-item-foot">
-                                                                     <p class="todo-red todo-inline"><p>${c5.stID}</p></p>
-                                                                     <p class="todo-inline todo-float-r">${c5.d} ${c5.t}
-                                                                     </p>
-                                                                 </div>
-                                                             </li>
-                                                             <div class="todo-projects-divider"></div>
-                                                            </c:forEach>
+                                                            <%} else {%>
 
+                                                            
+                                                            <c:forEach items="${searchAll}" var="c5" varStatus="vs">
+                                                                <li class="todo-projects-item">
+                                                                    <h3 > <a href="" style="color: black; float: left;">${c5.fileName}</a></h3>
+                                                                     <a href="DownloadServlet?id=${c5.fileID}" class="btn btn-sm btn-default" style="float: right;">
+                                                                                 Download </a>
+                                                                    <p style="clear: both;">${c5.detail}</p>
+                                                                    <p >
+                                                                       
+                                                                            <span class="label label-sm label-info labelTag">${c5.tagName}</span>     
+                                                                       
+                                                                    </p>
+                                                                   
+                                                                   
+                                                                    <div class="todo-project-item-foot">
+                                                                        <p class="todo-red todo-inline"><p>${c5.username}</p></p>
+                                                                        <p class="todo-inline todo-float-r">${c5.d} ${c5.t}
+                                                                        </p>
+                                                                    </div>
+                                                                </li>
+                                                                <div class="todo-projects-divider"></div>
+                                                            </c:forEach>
+                                                            <%}%>
                                                         </ul>																																																	<div class="todo-projects-divider"></div>
                                                     </div>
                                                     <div class="search-pagination">
@@ -306,36 +326,36 @@
                                                 <div class="portlet-body form">
                                                     <div class="row">
                                                         <a href="">
-                                                            
-                                                           <c:forEach items="${tt}" var="c3" varStatus="vs">
-                                                                         
-                                                             <div class="col-md-4">
 
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white  "> ${c3.tagName }</div>
-                                                            </div>
-                                                        </div>
-                                                         </c:forEach>
-                                                            
-                                                           <c:forEach items="${t}" var="c2" varStatus="vs">
-                                                                         
-                                                             <div class="col-md-4">
+                                                            <c:forEach items="${showTagMatch}" var="c3" varStatus="vs">
 
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white  "> ${c2.tagName }</div>
-                                                            </div>
-                                                        </div>
-                                                         </c:forEach>
-                                                            
-                                                          <c:forEach items="${ft}" var="c4" varStatus="vs">
-                                                                         
-                                                             <div class="col-md-4">
+                                                                <div class="col-md-4">
 
-                                                            <div class="color-demo tooltips" data-original-title="" title="">
-                                                                <div class="color-view font-white  "> ${c4.tagName }</div>
-                                                            </div>
-                                                        </div>
-                                                         </c:forEach>
+                                                                    <div class="color-demo tooltips" data-original-title="" title="">
+                                                                        <div class="color-view font-white  "> ${c3.tagName }</div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach>
+
+                                                            <c:forEach items="${listTag}" var="c2" varStatus="vs">
+
+                                                                <div class="col-md-4">
+
+                                                                    <div class="color-demo tooltips" data-original-title="" title="">
+                                                                        <div class="color-view font-white  "> ${c2.tagName }</div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach>
+
+                                                            <c:forEach items="${nameTag}" var="c4" varStatus="vs">
+
+                                                                <div class="col-md-4">
+
+                                                                    <div class="color-demo tooltips" data-original-title="" title="">
+                                                                        <div class="color-view font-white  "> ${c4.tagName }</div>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach>
                                                         </a>
                                                     </div>
                                                     <div class="search-pagination">

@@ -191,13 +191,13 @@
                                                                 <c:forEach items= "${report}" var="rp" varStatus="vs">
                                                                 <tr>
                                                                         <td>
-                                                                            <a href="javascript:;">${rp.fileID}</a>
+                                                                            <a href="javascript:;">${rp.fileName}</a>
                                                                         </td>
-                                                                        <td>12</td> 
+                                                                       
                                                                         <td>
                                                                             <a href="DownloadServlet?id=${rp.fileID}" class="btn btn-sm btn-default">
                                                                                 <i class="fa fa-search"></i> Download </a>
-                                                                            <a href="javascript:;" class="btn btn-sm red-mint">
+                                                                            <a href="DeleteServlet?id=${rp.fileID}" class="btn btn-sm red-mint">
                                                                                 <i class="fa fa-ban"></i>Delete Sheet</a>
                                                                                 <br>
                                                                         </td>

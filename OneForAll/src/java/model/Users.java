@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class Users {
 
     private String username;
-    private int  type;
+    private int  type , userId;
     private String name, surName, password;
     private static String msg;
 
@@ -53,16 +53,6 @@ public class Users {
         this.type = type;
     }
 
-    public String getStID() {
-        return username;
-    }
-
-    public void setStID(String username) {
-        this.username = username;
-    }
-
- 
-
     public String getName() {
         return name;
     }
@@ -83,10 +73,47 @@ public class Users {
         return password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
-
+    public static void main(String[] args) {
+        Users u = getUserIdSession("admin", "123456");
+        System.out.println(u.getUserId());
+    }
+    public static Users getUserIdSession(String username, String password){
+         Users Id = null;
+        try {
+            Connection con = ConnectionBuilder.getConnection();
+            String sql = "select * from user where username like ? and password like ? ";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);           
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Id = new Users();
+                Id.setUserId(rs.getInt("userId"));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return Id;
+    }
     public static Users checkType(String username) {
         Users typeId = null;
         try {
@@ -117,7 +144,7 @@ public class Users {
             if (rs.next()) {
                 Users us = new Users();
                 us.setPassword(rs.getString("password"));
-                us.setStID(rs.getString("username"));
+                us.setUsername(rs.getString("username"));
                 result = true;
             } else {
                 msg = "Username or Password is incorrect.";

@@ -22,8 +22,8 @@ public class ReportFile {
 
     private int fileID, reportID;
     private Blob fileBlob; //Blob เป็นกลุ่มของไฟล์ คล้ายๆ .rar
-    private String fileName;
-
+    private String fileName,path;
+    
     public ReportFile() {
 
     }
@@ -38,9 +38,9 @@ public class ReportFile {
         this.reportID = reportID;
     }
 
-    public ReportFile(String fileName, Blob fileBlob ) {
+    public ReportFile(String path, Blob fileBlob ) {
         this.fileBlob = fileBlob;
-        this.fileName = fileName;
+        this.path = path;
     }
 
     public int getFileID() {
@@ -75,23 +75,33 @@ public class ReportFile {
         this.fileName = fileName;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     @Override
     public String toString() {
-        return "ReportFile{" + "fileID=" + fileID + ", reportID=" + reportID + ", fileBlob=" + fileBlob + '}';
+        return "ReportFile{" + "fileID=" + fileID + ", reportID=" + reportID + ", fileBlob=" + fileBlob + ", fileName=" + fileName + ", path=" + path + '}';
     }
+
+   
 
     public static List<ReportFile> listReportFile() {//สร้าง method เป็นอาเรย์ลิส
         List<ReportFile> rpf = null;//สร้างอาเรย์ลิสเพื่อที่เก็บชื่อเป็นลิส
         Connection con = null;
         try {
             con = ConnectionBuilder.getConnection();
-            String sql = "select * from reportfile"; //ใช้ภาษา sql ในการเรียกไฟล์จากตาราง reportfile
+            String sql = "select * from file"; //ใช้ภาษา sql ในการเรียกไฟล์จากตาราง reportfile
             PreparedStatement st = con.prepareStatement(sql);// เตรียมคำสั่งข้างบนให้สมบูรณ์
             ResultSet rs = st.executeQuery();
             while (rs.next()) {//สร้างลูปแสดงไฟล์ที่โดนรีพอร์ต
                 ReportFile rf = new ReportFile();
+                rf.setFileName(rs.getString("fileName"));
                 rf.setFileID(rs.getInt("fileID"));
-
                 if (rpf == null) {//ถ้าไม่เจอให้สร้างอาเรย์
                     rpf = new ArrayList<>();
                 }
@@ -116,15 +126,15 @@ public class ReportFile {
 
         try {
             con = ConnectionBuilder.getConnection();
-            String sql = "Select * from reportfile where fileID = ?";//เรียกดูตามไอดีของไฟล์
+            String sql = "Select * from file where fileId = ?";//เรียกดูตามไอดีของไฟล์
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                String fileNFromDB = rs.getString("fileName");//เอาชื่อกับตัวไฟล์มาเก็บไว้
-                Blob fileData = rs.getBlob("RarFile");
-
+                String fileNFromDB = rs.getString("path");//เอาชื่อกับตัวไฟล์มาเก็บไว้
+                Blob fileData = rs.getBlob("fileType");
                 return new ReportFile(fileNFromDB, fileData);
+            
             }
         } catch (SQLException e) {
             e.getMessage();

@@ -28,6 +28,26 @@
         <servlet-name>FilesServlet</servlet-name>
         <servlet-class>controller.FilesServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadServlet</servlet-name>
+        <servlet-class>controller.UploadServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteServlet</servlet-name>
+        <servlet-class>controller.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowDetailServlet</servlet-name>
+        <servlet-class>controller.ShowDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>FileHomeServlet</servlet-name>
+        <servlet-class>controller.FileHomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>controller.HomeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>search</servlet-name>
         <url-pattern>/search</url-pattern>
@@ -55,6 +75,26 @@
     <servlet-mapping>
         <servlet-name>FilesServlet</servlet-name>
         <url-pattern>/FilesServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadServlet</servlet-name>
+        <url-pattern>/UploadServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteServlet</servlet-name>
+        <url-pattern>/DeleteServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowDetailServlet</servlet-name>
+        <url-pattern>/ShowDetailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FileHomeServlet</servlet-name>
+        <url-pattern>/FileHomeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/HomeServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
