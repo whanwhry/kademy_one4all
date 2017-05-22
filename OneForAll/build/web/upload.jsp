@@ -174,7 +174,7 @@
                                             </a>
                                         </li>
                                         <li class="active">
-                                            <a href="home.jsp">One for all
+                                            <a href="HomeServlet">One for all
                                             </a>
                                         </li>
                                     </ul>
@@ -245,7 +245,7 @@
                                                             <div class="form-actions">
                                                                 <div class="col-md-offset-3 col-md-9">
                                                                     <script>
-                                                                    var _validFileExtensions = [".pdf", ".zip", ".rar",".docx"];    
+                                                                    var _validFileExtensions = [".pdf", ".zip", ".rar"];    
                                                                     function ValidateSingleInput(oInput) {
                                                                     if (oInput.type == "file") {
                                                                     var sFileName = oInput.value;

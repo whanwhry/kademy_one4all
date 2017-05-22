@@ -47,6 +47,7 @@ public class Upload extends HttpServlet {
         int capacity=0;
         try {
             int ids = Integer.parseInt(id.toString());
+            
            /* outputStream // สร้าง outputStream ในการเขียนไฟล์ 
                     = new FileOutputStream(new File(tranPath+title));
             */

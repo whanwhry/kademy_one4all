@@ -178,7 +178,7 @@
                                             </a>
                                         </li>
                                         <li class="active">
-                                            <a href="home.jsp">One for all
+                                            <a href="HomeServlet">One for all
                                             </a>
                                         </li>
                                     </ul>
