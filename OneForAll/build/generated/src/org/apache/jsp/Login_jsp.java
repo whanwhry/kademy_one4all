@@ -48,6 +48,7 @@ public final class Login_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("<html lang=\"en\"><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
       out.write("        \n");
       out.write("        <title>KADEMY | STRONGEST LEARNING PLATFORM FOR KMUTT STUDENT</title>\n");
+      out.write("         <link rel=\"icon\" href=\"http://localhost:8080/OneForAll/kademy.png\">\n");
       out.write("        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n");
       out.write("        <meta content=\"width=device-width, initial-scale=1\" name=\"viewport\">\n");
       out.write("        <meta content=\"\" name=\"description\">\n");

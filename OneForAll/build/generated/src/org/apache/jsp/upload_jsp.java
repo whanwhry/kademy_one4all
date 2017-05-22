@@ -46,7 +46,7 @@ public final class upload_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("<!DOCTYPE html>\n");
       out.write("<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("\n");
+      out.write("         <link rel=\"icon\" href=\"http://localhost:8080/OneForAll/kademy.png\">\n");
       out.write("        <title>KADEMY | STRONGEST LEARNING PLATFORM FOR KMUTT STUDENT</title>\n");
       out.write("        <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n");
       out.write("        <meta content=\"width=device-width, initial-scale=1\" name=\"viewport\">\n");
@@ -212,7 +212,7 @@ public final class upload_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                            </a>\n");
       out.write("                                        </li>\n");
       out.write("                                        <li class=\"active\">\n");
-      out.write("                                            <a href=\"https://int305-kademy.firebaseapp.com/one-4-all.html\">One for all\n");
+      out.write("                                            <a href=\"home.jsp\">One for all\n");
       out.write("                                            </a>\n");
       out.write("                                        </li>\n");
       out.write("                                    </ul>\n");

@@ -178,7 +178,7 @@
                                             </a>
                                         </li>
                                         <li class="active">
-                                            <a href="https://int305-kademy.firebaseapp.com/one-4-all.html">One for all
+                                            <a href="home.jsp">One for all
                                             </a>
                                         </li>
                                     </ul>
