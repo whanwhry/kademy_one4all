@@ -150,7 +150,7 @@
                                             </a>
                                         </li>
                                         <li class="active">
-                                            <a href="https://int305-kademy.firebaseapp.com/admin-one-4-all.html">One for all
+                                            <a href="ShowDetailServlet">One for all
                                             </a>
                                         </li>
                                     </ul>
