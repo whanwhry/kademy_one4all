@@ -37,16 +37,18 @@ public class HomeServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         request.setCharacterEncoding("UTF-8");
         Object id = request.getSession().getAttribute("userId");
-        try{
+        try {
             //int count = 0 ;
-          //  ArrayList<String> tageiei = new ArrayList<>();
-          //  String tag  ;
-          //  int indexCount = 0 ;
-          List<Tag> listTag = Tag.listTags();
+            //  ArrayList<String> tageiei = new ArrayList<>();
+            //  String tag  ;
+            //  int indexCount = 0 ;
+            List<Tag> listTag = Tag.listTags();
             request.setAttribute("listTag", listTag);
             int ids = Integer.parseInt(id.toString());
-            List<Files> rub = Files.setTagList(ids);
-            request.setAttribute("searchAll", rub);
+//            List<Files> rub = Files.setTagList(ids);
+//            request.setAttribute("searchAll", rub);
+            List<Files> correct = Files.listFileByTime(ids);
+            request.setAttribute("searchAllCorrect", correct);
 //            for(Files i : rub){
 //                do{
 //                tag = i.getTagName().substring(indexCount,i.getTagName().indexOf(","));
@@ -54,10 +56,10 @@ public class HomeServlet extends HttpServlet {
 //                tageiei.add(tag);
 //                }while(indexCount!=i.getTagName().length()-1);
 //            }
-           //  request.setAttribute("tageiei", tageiei);
-            
+            //  request.setAttribute("tageiei", tageiei);
+
             getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
-        }catch(NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println(e);
         }
     }

@@ -68,7 +68,7 @@ public class Upload extends HttpServlet {
                     // File data
                     InputStream is = part.getInputStream();
                     // Write to file
-                    Files.insertFile(title,detail,is,capacity,fileName,tagname,ids);//เพิ่ม tagname ไว้เพื่อเอาไปหา tagId เพื่อดึงเข้า file_tag
+                    Files.insertFile(title,detail,is,fileName,tagname,ids);//เพิ่ม tagname ไว้เพื่อเอาไปหา tagId เพื่อดึงเข้า file_tag
                     Tagss.insertTag(tagname); 
                 }
             }

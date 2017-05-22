@@ -19,14 +19,14 @@ import sun.net.www.content.audio.x_aiff;
 public class Files extends Tagss {
 
     private static int fileID;
+    private int filesID;
     private String fileName;
     private String detail;
     private String path;
     private String time;
-    private double capacity;
+    
     private long userId;
-    private int downloadCount;
-    private static int numCount = 0;
+    
     private Tagss tags;
     private String tagName, surName;
     private Time t;
@@ -34,7 +34,7 @@ public class Files extends Tagss {
     private String username;
    
     // method insertFile ขึ้น database ให้ส่ง filename detail(หัวข้อไฟล์) capacity path และ tagname
-    public static String insertFile(String fileName, String detail, InputStream is, double capacity, String path, String tagName, int id) {
+    public static String insertFile(String fileName, String detail, InputStream is, String path, String tagName, int id) {
         String status;
         ArrayList<String> subTag = new ArrayList();
         ArrayList<Integer> subTagId = new ArrayList();
@@ -45,14 +45,14 @@ public class Files extends Tagss {
         }
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "INSERT INTO file(fileName,detail,capacity,path, fileType , userId ) VALUE (?,?,?,?,?,?)";
+            String sql = "INSERT INTO file(fileName,detail,path, fileType , userId ) VALUE (?,?,?,?,?)";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, fileName);
             ps.setString(2, detail);
-            ps.setDouble(3, capacity);
-            ps.setString(4, path);
-            ps.setBlob(5, is);
-            ps.setInt(6, id);
+         
+            ps.setString(3, path);
+            ps.setBlob(4, is);
+            ps.setInt(5, id);
             ps.executeUpdate();
 
             String sqlSelectFileID = "SELECT * from file where fileName = ?"; //ให้หา filename ในfile เพื่อหา fileid
@@ -140,45 +140,9 @@ public class Files extends Tagss {
         return cl;
     }
 
-    public static List<Files> topDownload() {//สร้างmethodเป็นอาเรย์ลิส
-        List<Files> top = null;//สร้างอาเรย์ลิสเพื่อที่เก็บชื่อเป็นลิส
-
-        try {
-            Connection con = ConnectionBuilder.getConnection();
-            String sql = "SELECT * FROM file "
-                    + "JOIN file_tag on file.fileId = file_tag.tagId "
-                    + "JOIN tag on tag.tagId = file_tag.tagId"
-                    + "order by downloadCount DESC";//ใช้ภาษาsqlหาชื่อ
-            PreparedStatement st = con.prepareStatement(sql);// เตรียมคำสั่งนี้ให้สมบูรณ์(ข้างบน)
-            ResultSet rs = st.executeQuery();
-            while (rs.next()) {//สร้างลูปหาชื่อ
-                Files topCount = new Files();
-                topCount.setFileName(rs.getString("fileName"));
-                topCount.setDetail(rs.getString("detail"));
-                topCount.setUsername(rs.getString("username"));
-                topCount.setT(rs.getTime("time"));
-                topCount.setD(rs.getDate("time"));
-                topCount.setTagName(rs.getString("tagName"));
-                if (top == null) {//ถ้าไม่เจอให่สร้างอาเรย์
-                    top = new ArrayList<>();
-                }
-                top.add(topCount);//เพิ่มชื่อที่หาเจอไปในลิสเรื่อยๆ
-
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-
-        return top;
-    }
-    public static void main(String[] args) {
-        List<Files> a = setTagList(0);
-        System.out.println(a.toString());
-      
-      
-    }
+   
         
-    public static List<Files> setTagList(int id){
+    public static List<Files> setTagList(int id){//bugs
         int count = 0;
         List<Files> a = new ArrayList<>();
         List<Files> rub = listFileByTime(id);     
@@ -203,16 +167,22 @@ public class Files extends Tagss {
         }
         return a;
     }
-
+    public static void main(String[] args) {
+        List<Files> l = listFileByTime(0);
+        for (int i = 0; i < l.size(); i++) {
+            System.out.println(l.get(i).getFilesID());
+        }
+        
+    }
     public static List<Files> listFileByTime(int id) {//สร้างmethodเป็นอาเรย์ลิส
         List<Files> newest = null;//สร้างอาเรย์ลิสเพื่อที่เก็บชื่อเป็นลิส
 
         try {
             Connection con = ConnectionBuilder.getConnection();
-            String sql = "select * from tag "
-                    + "JOIN file_tag on tag.tagID = file_tag.tagId "
-                    + "join file on file.fileID = file_tag.fileId "
-                    + "where userId = ?"
+            String sql = "select * from file "
+                    + "JOIN file_tag on file.fileID = file_tag.fileId "
+                    + "join tag on tag.tagID = file_tag.tagId "
+                    + "where userId = ? "   
                     + " order by time DESC";//ใช้ภาษาsqlหาชื่อ
             PreparedStatement st = con.prepareStatement(sql);// เตรียมคำสั่งนี้ให้สมบูรณ์(ข้างบน)
             st.setInt(1, id);
@@ -224,7 +194,8 @@ public class Files extends Tagss {
                 lfbt.setT(rs.getTime("time"));
                 lfbt.setD(rs.getDate("time"));
                 lfbt.setTagName(rs.getString("tagName"));
-                lfbt.setFileID(rs.getInt("fileId"));
+                lfbt.setFilesID(rs.getInt("fileId"));
+                
                 if (newest == null) {//ถ้าไม่เจอให่สร้างอาเรย์
                     newest = new ArrayList<>();
                 }
@@ -238,18 +209,9 @@ public class Files extends Tagss {
         return newest;
     }
 
-    public int numCount() {
-        this.downloadCount = ++numCount;
-        return downloadCount;
-    }
+ 
 
-    public static String getTimeDate() {
-        Date d = new Date();
-        DateFormat fm = new SimpleDateFormat("dd-MM-yyyy");
-        String f = fm.format(d);
-
-        return f;
-    }
+    
 
     public String getFileName() {
         return fileName;
@@ -287,13 +249,7 @@ public class Files extends Tagss {
         this.userId = userId;
     }
 
-    public static int getNumCount() {
-        return numCount;
-    }
-
-    public static void setNumCount(int numCount) {
-        Files.numCount = numCount;
-    }
+    
 
     public Tagss getTags() {
         return tags;
@@ -319,21 +275,7 @@ public class Files extends Tagss {
         this.time = time;
     }
 
-    public double getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(double capacity) {
-        this.capacity = capacity;
-    }
-
-    public int getDownloadCount() {
-        return downloadCount;
-    }
-
-    public void setDownloadCount(int downloadCount) {
-        this.downloadCount = downloadCount;
-    }
+ 
 
     public String getTagName() {
         return tagName;
@@ -383,10 +325,20 @@ public class Files extends Tagss {
         this.username = username;
     }
 
+    public int getFilesID() {
+        return filesID;
+    }
+
+    public void setFilesID(int FilesID) {
+        this.filesID = FilesID;
+    }
+
     @Override
     public String toString() {
-        return "Files{" + "fileName=" + fileName + ", detail=" + detail + ", path=" + path + ", time=" + time + ", capacity=" + capacity + ", userId=" + userId + ", downloadCount=" + downloadCount + ", tags=" + tags + ", tagName=" + tagName + ", surName=" + surName + ", t=" + t + ", d=" + d + ", username=" + username + '}';
+        return "Files{" + "FilesID=" + filesID + ", fileName=" + fileName + ", detail=" + detail + ", path=" + path + ", time=" + time + ", userId=" + userId + ", tags=" + tags + ", tagName=" + tagName + ", surName=" + surName + ", t=" + t + ", d=" + d + ", username=" + username + '}';
     }
+    
+    
 
     public Files() {
     }

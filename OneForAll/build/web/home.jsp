@@ -264,7 +264,7 @@
                                                                     <div class="todo-project-item-foot">
                                                                         <p class="todo-red todo-inline"><p>${c.username}</p></p>
                                                                         <p class="todo-inline todo-float-r">${c.d} ${c.t}
-                                                                        </p>
+                                                                       </p>
                                                                     </div>
                                                                 </li>
                                                                 <div class="todo-projects-divider"></div>
@@ -274,8 +274,9 @@
                                                             
                                                             <c:forEach items="${searchAll}" var="c5" varStatus="vs">
                                                                 <li class="todo-projects-item">
+                                                           
                                                                     <h3 > <a href="" style="color: black; float: left;">${c5.fileName}</a></h3>
-                                                                     <a href="DownloadServlet?id=${c5.fileID}" class="btn btn-sm btn-default" style="float: right;">
+                                                                     <a href="DownloadServlet?id=${c5.filesID}" class="btn btn-sm btn-default" style="float: right;">
                                                                                  Download </a>
                                                                     <p style="clear: both;">${c5.detail}</p>
                                                                     <p >
