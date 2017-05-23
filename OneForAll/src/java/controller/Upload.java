@@ -48,20 +48,7 @@ public class Upload extends HttpServlet {
         try {
             int ids = Integer.parseInt(id.toString());
            
-           /* outputStream // สร้าง outputStream ในการเขียนไฟล์ 
-                    = new FileOutputStream(new File(tranPath+title));
-            */
-           /*
-            int read = 0;
-            byte[] bytes = new byte[1024]; // สร้าง byte ในการทีจะบอกว่าจะให้เขียนไฟล์ ทีละ กี่ byte
-            capacity = fileContent.available()/10000; //ใช้class available เพื่ออ่านตรวจความจุfile ต้องไว้ก่อน readfile!!!(/1000 เพื่อให้เก็บเป็น kb doubleเก็บไม่พอ)
-            
-            while ((read = fileContent.read(bytes)) != -1) {  // เป็นการสั่งให้เขียนไฟล์ ทีละ 1024 byte ถ้าเขียนหมดแล้ว จะ return -1
-                outputStream.write(bytes, 0, read);// เขียนไฟล์ ตามจำนวน byte ที่ read มาได้ โดยให้เริ่มตั้งแต่ byte ที่ 0
-            }
-
-           */
-           // Part list (multi files).
+           
             for (Part part : request.getParts()) {
                 String fileName = Files.extractFileName(part);
                 if (fileName != null && fileName.length() > 0) {

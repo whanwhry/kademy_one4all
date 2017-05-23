@@ -37,24 +37,29 @@ public class Tagss {
     public static String insertTag(String tagname) {
         String[] subTag = null;
         String status = "";
-        int col = 0;
-        int index = 0;
+        
         try {
             subTag=tagname.split(",");
+            
+            
             for (int i = 0; i < subTag.length; i++) {
                 System.out.println("tag = "+ subTag[i]);
                 System.out.println("[before]subTag = "+subTag[i]);
             }
+            
+            
             Connection con = ConnectionBuilder.getConnection();
             String sqlchecktag = "Select * from tag where tagname=?";
             PreparedStatement ps1 = con.prepareStatement(sqlchecktag);
+            
+            
             for(int i=0;i<subTag.length;i++){
                 ps1.setString(1, subTag[i]);
                 ResultSet rs1 = ps1.executeQuery();
                 int id = 0;
                 if(rs1.next()){
-                    subTag[i] = null;
-                    id = rs1.getInt("tagId");
+                    subTag[i] = null; //ให้ค่าอาร์เรย์ช่องนั้นเป็น null
+                    id   = rs1.getInt("tagId"); //
                 }
             }
             //insert tag ที่ไม่ซ้ำลง db

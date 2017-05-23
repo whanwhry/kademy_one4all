@@ -33,14 +33,15 @@ public class Files extends Tagss {
     private Date d;
     private String username;
    
-    // method insertFile ขึ้น database ให้ส่ง filename detail(หัวข้อไฟล์) capacity path และ tagname
+    
     public static String insertFile(String fileName, String detail, InputStream is, String path, String tagName, int id) {
         String status;
+        
         ArrayList<String> subTag = new ArrayList();
         ArrayList<Integer> subTagId = new ArrayList();
         tagName = tagName.replaceAll(",", " ");
         Scanner sc = new Scanner(tagName);
-        while (sc.hasNext()) {
+        while (sc.hasNext()) { //ดูว่ามัไหม เป็น method ของ Scanner return เป็น t f
             subTag.add(sc.next());
         }
         try {
@@ -55,13 +56,14 @@ public class Files extends Tagss {
             ps.setInt(5, id);
             ps.executeUpdate();
 
-            String sqlSelectFileID = "SELECT * from file where fileName = ?"; //ให้หา filename ในfile เพื่อหา fileid
+            String sqlSelectFileID = "SELECT * from file where fileName = ? ORDER BY fileName DESC"; //ให้หา filename ในfile เพื่อหา fileid
+            //เราใช้ ORDER BY "" DESC เพื่อแก้ปัญหา filename ซ้ำกัน มันจะนำอันล่าสุดที่เราต้องการที่จะ insert มาให้
             PreparedStatement ps1 = con.prepareStatement(sqlSelectFileID);
             ps1.setString(1, fileName);
             ResultSet select = ps1.executeQuery();
 
             int fileid = 0;
-            while (select.next()) {
+            if (select.next()) { //ดูว่ามีค่าไหม method next return เป็น t f ถ้า true จะเข้า
                 fileid = select.getInt("fileId"); //นำ filename ที่ select ออกมา วนหา fileid
             }
 
@@ -105,6 +107,7 @@ public class Files extends Tagss {
             status = "incomplete";
             System.out.println(e);
         }
+        
         return status;
     }
 
